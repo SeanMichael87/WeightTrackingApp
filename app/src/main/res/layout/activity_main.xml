@@ -1,105 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:background="@drawable/new_you"
     tools:context=".MainActivity">
-    
-    <androidx.cardview.widget.CardView
+
+    <FrameLayout
+        android:id="@+id/flFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="20dp"
-        android:background="@drawable/custom_input_box">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
-            android:padding="24dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Login"
-                android:id="@+id/loginText"
-                android:textSize="36sp"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="@color/blue"/>
-
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="50sp"
-                android:id="@+id/username"
-                android:background="@drawable/custom_input_box"
-                android:drawableStart="@drawable/username_icon"
-                android:drawablePadding="10dp"
-                android:hint="Username"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background"
-                android:layout_marginTop="40dp"/>
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="fill_parent"
-                android:layout_height="50sp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/custom_input_box"
-                android:drawableStart="@drawable/pass_lock_icon"
-                android:drawablePadding="10dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center_horizontal">
-                <Button
-                    android:layout_width="140sp"
-                    android:layout_height="60dp"
-                    android:id="@+id/login"
-                    android:textSize="18sp"
-                    android:text="Login"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="10dp"
-                    android:backgroundTint="@color/blue"
-                    app:cornerRadius="20dp"/>
-                <Button
-                    android:layout_width="140sp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="10dp"
-                    android:id="@+id/signup"
-                    android:textSize="18sp"
-                    android:text="Sign Up"
-                    android:layout_marginTop="30dp"
-                    android:backgroundTint="@color/blue"
-                    app:cornerRadius="20dp"/>
-            </LinearLayout>
-
-        </LinearLayout>
-    
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/reset_pass"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:text="Forgot Password?"
-        android:backgroundTint="@color/blue"/>
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
