@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-
+    
+    <TextView
+        android:text="SMS Permission"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:background="#FFFFBB33"
+         />
+    
     <TextView
         android:id="@+id/sms_message"
         android:layout_width="wrap_content"
@@ -17,4 +25,5 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp"
         android:background="@drawable/daily_weight_box"/>
+    
 </TableLayout>
