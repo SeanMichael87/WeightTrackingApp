@@ -4,12 +4,12 @@ public class PermissionsDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.permissions)
-               .setPositiveButton(R.string.start, new DialogInterface.OnClickListener() {
+               .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        // START THE GAME!
                    }
                })
-               .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+               .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        // User cancelled the dialog
                    }
