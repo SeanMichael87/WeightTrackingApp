@@ -1,10 +1,10 @@
 package com.SeanBCS360.WeightTrackerApp;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,18 +21,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void showCustomDialog() {
-        Button accept;
-        Button deny;
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.sms_permissions);
-
-        accept = dialog.findViewById(R.id.button_accept);
-        deny = dialog.findViewById(R.id.button_deny);
-
-        accept.setOnClickListener(view -> dialog.dismiss());
-        deny.setOnClickListener(view -> dialog.dismiss());
-
-        dialog.show();
-
+        FragmentManager manager = getSupportFragmentManager();
+        PermissionsDialog dialog = new PermissionsDialog();
+        dialog.show(manager, "sms permission");
     }
 }

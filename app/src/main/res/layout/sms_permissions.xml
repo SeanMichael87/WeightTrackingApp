@@ -5,15 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    
-    <TextView
-        android:text="SMS Permission"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:gravity="center"
-        android:background="#FFFFBB33"
-         />
-    
+
+    <TableRow>
+
+        <ImageView
+            android:layout_width="111dp"
+            android:layout_height="match_parent"
+            android:contentDescription="warning"
+            android:background="#FFFFBB33"
+            android:src="@drawable/baseline_warning_24">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="64dp"
+            android:background="#FFFFBB33"
+            android:gravity="start|center"
+            android:text="@string/sms_permission"
+            android:textSize="25sp" />
+    </TableRow>
     <TextView
         android:id="@+id/sms_message"
         android:layout_width="wrap_content"
@@ -23,7 +34,6 @@
         android:textSize="20sp"
         android:padding="15sp"
         tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp"
-        android:background="@drawable/daily_weight_box"/>
+        tools:layout_editor_absoluteY="16dp"/>
     
 </TableLayout>
