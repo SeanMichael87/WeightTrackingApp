@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/sms_message"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="309dp"
-        android:layout_marginTop="150dp"
+        android:gravity="center"
         android:text="@string/permissions"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:padding="15sp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp"
         android:background="@drawable/daily_weight_box"/>
 
     <Button
-        android:id="@+id/button_notification_accept"
+        android:id="@+id/button_accept"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/accept"
@@ -29,7 +29,7 @@
         android:backgroundTint="@color/blue"/>
 
     <Button
-        android:id="@+id/button_notification_deny"
+        android:id="@+id/button_deny"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/deny"

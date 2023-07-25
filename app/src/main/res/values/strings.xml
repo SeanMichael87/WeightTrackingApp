@@ -12,7 +12,7 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="permissions">We may request SMS permissions to verify your phone number, send weight tracking reminders, and provide personalized support. Rest assured, we prioritize your privacy and only use this data for essential app functions, never sharing it with third parties for marketing purposes.</string>
+    <string name="permissions">We may request SMS permissions to verify your phone number, send weight tracking reminders, and provide personalized support. Rest assured, we prioritize your privacy and only use this data for essential app functions, we never share with third parties</string>
     <string name="accept">Accept</string>
     <string name="deny">Deny</string>
 </resources>
