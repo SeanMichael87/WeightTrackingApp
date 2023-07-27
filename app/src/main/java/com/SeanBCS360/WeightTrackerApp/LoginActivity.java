@@ -11,6 +11,10 @@ import androidx.fragment.app.FragmentManager;
 public class LoginActivity extends AppCompatActivity {
 
     Button loginButton;
+    Button signUp;
+    Button forgotPass;
+    EditText username;
+    EditText password;
   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
