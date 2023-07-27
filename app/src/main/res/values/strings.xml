@@ -16,4 +16,11 @@
     <string name="accept">Accept</string>
     <string name="deny">Deny</string>
     <string name="sms_permission">SMS Notifications</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="allow_sms_notifications">Allow SMS notifications?</string>
+    <string name="change_goal_weight">Change Goal Weight</string>
+    <string name="delete_profile">Delete Profile</string>
+    <string name="update_profile">Update Profile</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
