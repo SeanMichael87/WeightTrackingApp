@@ -4,6 +4,9 @@
     <color name="lt_blue">#7895CB</color>
     <color name="sky_blue">#A0BFE0</color>
     <color name="cold_blue">#C5DFF8</color>
+    <color name="misty_blue">#6C8DA1</color>
+    <color name="drk_blue">#1B4B66</color>
+    <color name="lunar_pearl">#F5F5F5</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
