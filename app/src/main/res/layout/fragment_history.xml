@@ -116,9 +116,40 @@
             app:layout_constraintVertical_bias="0.0">
 
             <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="horizontal"
+                android:padding="16dp">
+            
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Date Placeholder"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+            
+                <!-- Weight TextView -->
+                <TextView
+                    android:id="@+id/tvWeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Weight Placeholder"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"/>
+            
+                <!-- Delete Button -->
+                <Button
+                    android:id="@+id/btnDelete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:textColor="@android:color/white"
+                    android:background="@color/colorAccent"/>
+
+            </LinearLayout>
         </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
