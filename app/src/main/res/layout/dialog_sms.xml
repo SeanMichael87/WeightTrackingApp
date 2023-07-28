@@ -11,7 +11,7 @@
         <ImageView
             android:layout_width="111dp"
             android:layout_height="match_parent"
-            android:contentDescription="warning"
+            android:contentDescription="@string/warning"
             android:background="#FFFFBB33"
             android:src="@drawable/baseline_warning_24">
 

@@ -18,7 +18,7 @@ public class PermissionsDialog extends DialogFragment {
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
-        builder.setView(inflater.inflate(R.layout.sms_permissions, null))
+        builder.setView(inflater.inflate(R.layout.dialog_sms, null))
                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        // START THE GAME!

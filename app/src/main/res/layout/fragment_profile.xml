@@ -8,7 +8,7 @@
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/sky_blue"
+        android:background="@color/misty_blue"
         android:orientation="vertical"
         tools:context=".MainActivity">
 
@@ -34,7 +34,7 @@
                     android:text="@string/edit_profile"
                     android:textAlignment="center"
                     android:textAllCaps="true"
-                    android:textColor="@color/blue"
+                    android:textColor="@color/drk_blue"
                     android:textSize="36sp" />
 
                 <EditText
@@ -93,7 +93,7 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="30dp"
                         android:layout_marginEnd="10dp"
-                        android:backgroundTint="@color/blue"
+                        android:backgroundTint="@color/drk_blue"
                         android:text="@string/allow_sms_notifications"
                         android:textSize="18sp"
                         app:cornerRadius="20dp" />
@@ -123,7 +123,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="10dp"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/drk_blue"
                 android:text="@string/delete_profile"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
@@ -135,7 +135,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/drk_blue"
                 android:text="@string/update_profile"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />

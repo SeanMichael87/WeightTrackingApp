@@ -23,4 +23,9 @@
     <string name="update_profile">Update Profile</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="warning">warning</string>
+    <string name="date">Date</string>
+    <string name="weight">Weight</string>
+    <string name="lbs">lbs</string>
+    <string name="weight_history">Weight History</string>
 </resources>
