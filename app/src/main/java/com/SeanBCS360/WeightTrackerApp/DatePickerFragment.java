@@ -1,14 +1,15 @@
 package com.SeanBCS360.WeightTrackerApp;
 
-import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.DatePicker;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-public static class DatePickerFragment extends DialogFragment
+import java.util.Calendar;
+
+public class DatePickerFragment extends DialogFragment
                             implements DatePickerDialog.OnDateSetListener {
 
     @Override

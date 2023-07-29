@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         signUp = findViewById(R.id.signup);
 
         loginButton.setOnClickListener(view -> enterMainActivity());
-        signUp.setOnClickListener(view -> showCustomDialog());
+        signUp.setOnClickListener(view -> showSignUpDialog());
     }
 
     void showCustomDialog() {
@@ -35,6 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         PermissionsDialog dialog = new PermissionsDialog();
         dialog.show(manager, "sms permission");
     }
+    void showSignUpDialog() {
+        FragmentManager manager = getSupportFragmentManager();
+        SignUpDialog dialog = new SignUpDialog();
+        dialog.show(manager, "Sign Up");
+    }
+
 
     public void enterMainActivity() {
         Intent i = new Intent(getApplicationContext(), MainActivity.class);

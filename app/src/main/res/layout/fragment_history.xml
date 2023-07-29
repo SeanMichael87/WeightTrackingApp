@@ -27,7 +27,7 @@
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="411dp"
-            android:layout_height="826dp"
+            android:layout_height="723dp"
             android:contentDescription="Weight History"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -92,16 +92,26 @@
             android:id="@+id/floatingActionButton"
             android:layout_width="60dp"
             android:layout_height="58dp"
-            android:layout_marginStart="280dp"
-            android:layout_marginTop="700dp"
             android:clickable="true"
             android:contentDescription="add data"
-            app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/scrollView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.895"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            app:layout_constraintVertical_bias="0.444"
             app:maxImageSize="56dp"
             app:srcCompat="@drawable/baseline_add_24" />
+
+        <LinearLayout
+            android:layout_width="409dp"
+            android:layout_height="102dp"
+            android:orientation="horizontal"
+            android:background="@color/misty_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

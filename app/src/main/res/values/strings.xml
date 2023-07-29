@@ -28,4 +28,6 @@
     <string name="weight">Weight</string>
     <string name="lbs">lbs</string>
     <string name="weight_history">Weight History</string>
+    <string name="choose_a_goal_date">Choose a Goal Date</string>
+    <string name="calendar">Calendar</string>
 </resources>
