@@ -12,7 +12,7 @@
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="forgot_password">Forgot Password?</string>
-    <string name="permissions">We may request SMS permissions to verify your phone number, send weight tracking reminders, and provide personalized support. Rest assured, we prioritize your privacy and only use this data for essential app functions, we never share with third parties</string>
+    <string name="permissions">We are requesting SMS permissions to send weight tracking reminders and notifications for when your goal is reached. Rest assured, we prioritize your privacy and only use this data for essential app functions, we never share with third parties</string>
     <string name="accept">Accept</string>
     <string name="deny">Deny</string>
     <string name="sms_permission">SMS Notifications</string>
@@ -28,6 +28,7 @@
     <string name="weight">Weight</string>
     <string name="lbs">lbs</string>
     <string name="weight_history">Weight History</string>
-    <string name="choose_a_goal_date">Choose a Goal Date</string>
+    <string name="choose_a_goal_date">Choose a Goal Date:</string>
     <string name="calendar">Calendar</string>
+    <string name="delete">Delete</string>
 </resources>

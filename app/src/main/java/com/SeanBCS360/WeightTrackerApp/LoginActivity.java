@@ -30,11 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         signUp.setOnClickListener(view -> showSignUpDialog());
     }
 
-    void showCustomDialog() {
-        FragmentManager manager = getSupportFragmentManager();
-        PermissionsDialog dialog = new PermissionsDialog();
-        dialog.show(manager, "sms permission");
-    }
     void showSignUpDialog() {
         FragmentManager manager = getSupportFragmentManager();
         SignUpDialog dialog = new SignUpDialog();

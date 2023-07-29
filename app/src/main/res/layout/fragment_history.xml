@@ -28,7 +28,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="411dp"
             android:layout_height="723dp"
-            android:contentDescription="Weight History"
+            android:contentDescription="@string/weight_history"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -36,6 +36,8 @@
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintVertical_bias="0.0">
 
+            <!--Row card to be used to input User data from input and database-->
+            <!--This will be implemented with RecyclerView to have scrollable data-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,7 +55,6 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
-                <!-- Weight TextView -->
                 <TextView
                     android:id="@+id/tvWeight"
                     android:layout_width="122dp"
@@ -73,7 +74,6 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp" />
 
-                <!-- Delete Button -->
                 <ImageView
                     android:id="@+id/btnDelete"
                     android:layout_width="71dp"
@@ -82,12 +82,18 @@
                     android:clickable="true"
                     android:contentDescription="TODO"
                     android:src="@drawable/baseline_delete_forever_24"
-                    android:text="Delete"
+                    android:text="@string/delete"
                     android:textColor="@android:color/white" />
 
             </LinearLayout>
+
         </ScrollView>
 
+        <!--
+        Button to add desired weight data (not sure if I should make date selectable as well).
+        Used Floating action button here for practice - could just implement similar
+        function as in dash.xml with input box with button
+         -->
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="60dp"

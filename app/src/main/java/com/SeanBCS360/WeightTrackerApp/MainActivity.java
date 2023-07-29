@@ -2,7 +2,6 @@ package com.SeanBCS360.WeightTrackerApp;
 
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +11,6 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
-    Button loginButton;
     NavigationBarView navigationBarView;
 
     @Override
@@ -20,16 +18,20 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        loginButton = findViewById(R.id.login);
         navigationBarView = findViewById(R.id.bottomNavigationView);
         navigationBarView.setOnItemSelectedListener(this);
         navigationBarView.setSelectedItemId(R.id.dashboard);
-        //loginButton.setOnClickListener(view -> showCustomDialog());
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        showSmsDialog();
+    }
+
     DashFrag newFrag = new DashFrag();
     HistoryFrag hisFrag = new HistoryFrag();
     ProfileFrag profileFrag = new ProfileFrag();
-    void showCustomDialog() {
+    void showSmsDialog() {
         FragmentManager manager = getSupportFragmentManager();
         PermissionsDialog dialog = new PermissionsDialog();
         dialog.show(manager, "sms permission");
