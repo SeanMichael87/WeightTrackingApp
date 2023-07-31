@@ -8,9 +8,17 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "profile.db";
     private static final int DB_VERSION = 1;
+    public static DBHandler instance;
 
-    public DBHandler(Context context) {
+    private DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
+    }
+
+    public static DBHandler getInstance(Context context) {
+        if(instance == null) {
+            instance = new DBHandler(context);
+        }
+        return instance;
     }
 
     private static final class ProfileTable {
