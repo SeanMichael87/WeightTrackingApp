@@ -44,7 +44,7 @@ public class SignUpDialog extends DialogFragment implements DatePickerDialog.OnD
         EditText currentWeight = v.findViewById(R.id.curr_weight);
         EditText goalWeight = v.findViewById(R.id.goal_weight);
 
-        db = new DBHandler(getActivity());
+        db = DBHandler.getInstance(getActivity());
 
         builder.setView(v)
                 .setPositiveButton("Sign Up", (dialog, id) -> {
