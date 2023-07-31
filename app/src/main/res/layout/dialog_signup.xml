@@ -63,7 +63,7 @@
             android:drawableStart="@drawable/baseline_monitor_weight_24"
             android:drawablePadding="10dp"
             android:hint="@string/current_weight"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHighlight="@color/cardview_dark_background" />
@@ -78,7 +78,7 @@
             android:drawableStart="@drawable/baseline_monitor_weight_24"
             android:drawablePadding="10dp"
             android:hint="@string/goal_weight"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textColorHighlight="@color/cardview_dark_background" />

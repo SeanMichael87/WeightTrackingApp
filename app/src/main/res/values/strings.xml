@@ -31,4 +31,5 @@
     <string name="choose_a_goal_date">Choose a Goal Date:</string>
     <string name="calendar">Calendar</string>
     <string name="delete">Delete</string>
+    <string name="edit_button">Edit Button</string>
 </resources>
