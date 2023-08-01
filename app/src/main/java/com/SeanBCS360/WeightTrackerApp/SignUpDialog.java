@@ -28,8 +28,8 @@ import java.util.Date;
 public class SignUpDialog extends DialogFragment {
 
     ImageView calenderIcon;
-    private DBHandler db;
-    TextView calText;
+    public DBHandler db;
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class SignUpDialog extends DialogFragment {
         EditText goalWeight = v.findViewById(R.id.goal_weight);
         TextView calDate = v.findViewById(R.id.cal_date);
 
-        db = DBHandler.getInstance(getActivity());
+        db = new DBHandler(getActivity());
 
         calDate.setOnClickListener(view -> {
             Calendar mCalendar = Calendar.getInstance();
@@ -77,9 +77,10 @@ public class SignUpDialog extends DialogFragment {
                     float currWeight = Float.parseFloat(currentWeight.getText().toString());
                     float gWeight = Float.parseFloat(goalWeight.getText().toString());
 
-                    String goalDate = calText.getText().toString();
+                    String goalDate = calDate.getText().toString();
 
-                    db.addUser(userName, passWord, currWeight, todayDate, gWeight, goalDate);
+                    int userID = db.insertUserData(userName, passWord, gWeight, goalDate);
+                    db.insertWeightData(userID, currWeight, todayDate);
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
 

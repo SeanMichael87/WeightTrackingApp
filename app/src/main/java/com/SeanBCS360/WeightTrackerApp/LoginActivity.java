@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private DBHandler db;
+    public DBHandler db;
     Button loginButton;
     Button signUp;
     Button forgotPass;
@@ -30,10 +31,12 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
 
         loginButton.setOnClickListener(view -> {
-            db.getInstance(LoginActivity.this)
-            boolean valid = db.loginValidation(username, password);
-            if(valid) {
-                enterMainActivity()
+           db = new DBHandler(LoginActivity.this);
+            int userID= db.authenticateUser(username.getText().toString(), password.getText().toString());
+            if(userID > -1) {
+                UserSessionManager sessionManager = new UserSessionManager(this);
+                sessionManager.setUserId(userID);
+                enterMainActivity();
             } else {
                 CharSequence text = "Login Failed!";
                 int duration = Toast.LENGTH_SHORT;
