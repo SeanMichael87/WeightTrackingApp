@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private DBHandler db;
     Button loginButton;
     Button signUp;
     Button forgotPass;
@@ -25,8 +26,22 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.login);
         signUp = findViewById(R.id.signup);
+        username =findViewById(R.id.username);
+        password = findViewById(R.id.password);
 
-        loginButton.setOnClickListener(view -> enterMainActivity());
+        loginButton.setOnClickListener(view -> {
+            db.getInstance(LoginActivity.this)
+            boolean valid = db.loginValidation(username, password);
+            if(valid) {
+                enterMainActivity()
+            } else {
+                CharSequence text = "Login Failed!";
+                int duration = Toast.LENGTH_SHORT;
+
+                Toast.makeText(this, text, duration).show();
+            }
+                     
+        });
         signUp.setOnClickListener(view -> showSignUpDialog());
     }
 
