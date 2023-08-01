@@ -63,6 +63,34 @@ public class DBHandler extends SQLiteOpenHelper {
 
         return db.insert(ProfileTable.TABLE_NAME, null, values);
     }
+    
+    public boolean loginValidation(String username, String password){
+     boolean validation = false;
+
+    SQLiteDatabase db = this.getReadableDatabase();
+    String sql = "select * from " + ProfileTable.TABLE_NAME;
+    Cursor cursor = db.rawQuery(sql,null);
+    cursor.moveToFirst();
+    while(cursor.isAfterLast()== false){
+         long id = cursor.getLong(0);
+         String username = cursor.getString(1);
+         String password = cursor.getString(2);
+         float currentWeight = cursor.getFloat(3);
+         String currentDate = cursor.getString(4);
+          float goalWeight = cursor.getFloat(5);
+          String goalDate = cursor.getString(6);
+         Log.d(TAG, "Username/Pass = " + username + ", " + password + ", " + validation);
+        if(email.equals(emailDb) && password.equals(passwordDb)){
+            validation=true;
+            break;
+        }
+        else{
+            cursor.moveToNext();
+        }
+
+    }
+    return  validation;
+}
 
     
 public void getGoalWeight(String username) {
