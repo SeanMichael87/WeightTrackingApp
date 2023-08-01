@@ -9,11 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,17 +39,15 @@ public class SignUpDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_signup, null);
 
-        calenderIcon = v.findViewById(R.id.calendar);
         EditText username = v.findViewById(R.id.username);
         EditText password = v.findViewById(R.id.password);
         EditText currentWeight = v.findViewById(R.id.curr_weight);
         EditText goalWeight = v.findViewById(R.id.goal_weight);
-        calText = v.findViewById(R.id.calendarText);
+        TextView calDate = v.findViewById(R.id.cal_date);
 
         db = DBHandler.getInstance(getActivity());
 
-        calenderIcon.setOnClickListener(view -> {
-//            showTimePickerDialog();
+        calDate.setOnClickListener(view -> {
             Calendar mCalendar = Calendar.getInstance();
             int year = mCalendar.get(Calendar.YEAR);
             int month = mCalendar.get(Calendar.MONTH);
@@ -61,7 +59,7 @@ public class SignUpDialog extends DialogFragment {
                         mCalendar.set(Calendar.MONTH, monthOfYear);
                         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                         String goalDate = DateFormat.getDateInstance(DateFormat.FULL).format(mCalendar.getTime());
-                        calText.setText(goalDate);
+                        calDate.setText(goalDate);
                     },
                year, month, day);
 
@@ -84,16 +82,15 @@ public class SignUpDialog extends DialogFragment {
                     db.addUser(userName, passWord, currWeight, todayDate, gWeight, goalDate);
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
-                    // User cancelled the dialog
+
+                    CharSequence text = "Come Back Soon!";
+                    int duration = Toast.LENGTH_SHORT;
+
+                    Toast.makeText(getActivity(), text, duration).show();
                 });
 
         // Create the AlertDialog object and return it
         return builder.create();
-    }
-    public void showTimePickerDialog() {
-        FragmentManager manager = getChildFragmentManager();
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(manager, "DatePicker");
     }
 
 }

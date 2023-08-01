@@ -32,4 +32,5 @@
     <string name="calendar">Calendar</string>
     <string name="delete">Delete</string>
     <string name="edit_button">Edit Button</string>
+    <string name="goal_date">Goal Date</string>
 </resources>
