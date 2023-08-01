@@ -6,9 +6,9 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
@@ -25,10 +25,11 @@ import java.util.Date;
  * Use the {@link } factory method to
  * create an instance of this fragment.
  */
-public class SignUpDialog extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+public class SignUpDialog extends DialogFragment {
 
     ImageView calenderIcon;
     private DBHandler db;
+    TextView calText;
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -43,8 +44,29 @@ public class SignUpDialog extends DialogFragment implements DatePickerDialog.OnD
         EditText password = v.findViewById(R.id.password);
         EditText currentWeight = v.findViewById(R.id.curr_weight);
         EditText goalWeight = v.findViewById(R.id.goal_weight);
+        calText = v.findViewById(R.id.calendarText);
 
         db = DBHandler.getInstance(getActivity());
+
+        calenderIcon.setOnClickListener(view -> {
+//            showTimePickerDialog();
+            Calendar mCalendar = Calendar.getInstance();
+            int year = mCalendar.get(Calendar.YEAR);
+            int month = mCalendar.get(Calendar.MONTH);
+            int day = mCalendar.get(Calendar.DAY_OF_MONTH);
+
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    getActivity(), (datePicker, year1, monthOfYear, dayOfMonth) -> {
+                        mCalendar.set(Calendar.YEAR, year1);
+                        mCalendar.set(Calendar.MONTH, monthOfYear);
+                        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        String goalDate = DateFormat.getDateInstance(DateFormat.FULL).format(mCalendar.getTime());
+                        calText.setText(goalDate);
+                    },
+               year, month, day);
+
+            datePickerDialog.show();
+        });
 
         builder.setView(v)
                 .setPositiveButton("Sign Up", (dialog, id) -> {
@@ -57,11 +79,9 @@ public class SignUpDialog extends DialogFragment implements DatePickerDialog.OnD
                     float currWeight = Float.parseFloat(currentWeight.getText().toString());
                     float gWeight = Float.parseFloat(goalWeight.getText().toString());
 
-                    calenderIcon.setOnClickListener(view -> {
-                        showTimePickerDialog();
-                    });
+                    String goalDate = calText.getText().toString();
 
-                    db.addUser(userName, passWord, currWeight, todayDate, gWeight, "goalDate");
+                    db.addUser(userName, passWord, currWeight, todayDate, gWeight, goalDate);
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
                     // User cancelled the dialog
@@ -71,16 +91,9 @@ public class SignUpDialog extends DialogFragment implements DatePickerDialog.OnD
         return builder.create();
     }
     public void showTimePickerDialog() {
-        FragmentManager manager = getParentFragmentManager();
+        FragmentManager manager = getChildFragmentManager();
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(manager, "DatePicker");
     }
-    @Override
-    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-        Calendar mCalendar = Calendar.getInstance();
-        mCalendar.set(Calendar.YEAR, year);
-        mCalendar.set(Calendar.MONTH, month);
-        mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String goalDate = DateFormat.getDateInstance(DateFormat.FULL).format(mCalendar.getTime());
-    }
+
 }

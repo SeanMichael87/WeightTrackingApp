@@ -106,10 +106,17 @@
                 android:src="@drawable/baseline_calendar_month_24"
                 android:contentDescription="@string/calendar"
                 android:clickable="true" />
-
-
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/calendarText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Date"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
