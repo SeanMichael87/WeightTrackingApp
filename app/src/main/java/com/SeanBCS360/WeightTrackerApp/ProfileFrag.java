@@ -29,7 +29,16 @@ public class ProfileFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+
+         View v = inflater.inflate(R.layout.fragment_dash, container, false);
+
+        db = new DBHandler(getActivity());
+        changeUsername = v.findViewById(R.id.profile_username);
+        changePassword = v.findViewById(R.id.profile_password);
+        changeGoalWeight = v.findViewById(R.id.profile_goal_weight);
+        delete = v.findViewById(R.id.delete_profile);
+        update = v.findViewById(R.id.update_profile);     
+
+        return v;
     }
 }
