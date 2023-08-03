@@ -77,6 +77,7 @@ public class DashFrag extends Fragment {
             difference.setText(weightDiff);
 
             long daysDiff = dateDifference(db.getGoalDate(userID));
+            daysToGoal.setText(String.valueOf(daysDiff));
 
             Toast.makeText(getActivity(), Long.toString(daysDiff), Toast.LENGTH_LONG).show();
 
