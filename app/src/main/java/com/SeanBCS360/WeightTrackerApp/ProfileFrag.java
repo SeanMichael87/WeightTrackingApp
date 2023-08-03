@@ -43,7 +43,13 @@ public class ProfileFrag extends Fragment {
         int userID = manager.getUserId();
 
         if (userID != -1) {
-                
+            update.onClickListener(view -> {
+                String newUsername = changeUsername.getText().toString();
+                String newPassword = changePassword.getText().toString();
+                float newGoalWeight = Float.parse(changeGoalWeight.getText().toString());
+                db.updateProfile(userID, newUsername, newPassword, newGoalWeight)
+                Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show(); 
+                });
 
         } else {
             Toast.makeText(getActivity(), "Id not found", Toast.LENGTH_LONG).show();
