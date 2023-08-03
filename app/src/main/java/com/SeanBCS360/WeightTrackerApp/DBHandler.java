@@ -34,13 +34,14 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // Create the User Table
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + ProfileTable.PROFILE_TABLE + " ("
-                    + ProfileTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + ProfileTable.USERNAME_COL + " TEXT UNIQUE NOT NULL,"
-                    + ProfileTable.PASS_COL + " TEXT NOT NULL,"
-                    + ProfileTable.GOAL_COL+ " REAL NOT NULL,"
-                    + ProfileTable.GOAL_DATE_COL + " TEXT NOT NULL)");
-            //Create the user History Table
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ProfileTable.PROFILE_TABLE + " ("
+                + ProfileTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + ProfileTable.USERNAME_COL + " TEXT UNIQUE NOT NULL,"
+                + ProfileTable.PASS_COL + " TEXT NOT NULL,"
+                + ProfileTable.GOAL_COL+ " REAL NOT NULL,"
+                + ProfileTable.GOAL_DATE_COL + " TEXT NOT NULL)");
+    
+        //Create the user Weight History Table with key reference to primary table
         db.execSQL("CREATE TABLE IF NOT EXISTS " + ProfileTable.WEIGHT_TABLE + " ("
                 + ProfileTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProfileTable.USERID_COL + " INTEGER NOT NULL,"
