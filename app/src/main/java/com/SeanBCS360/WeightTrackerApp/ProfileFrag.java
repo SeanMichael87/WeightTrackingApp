@@ -39,6 +39,16 @@ public class ProfileFrag extends Fragment {
         delete = v.findViewById(R.id.delete_profile);
         update = v.findViewById(R.id.update_profile);     
 
+        UserSessionManager manager = new UserSessionManager(requireActivity());
+        int userID = manager.getUserId();
+
+        if (userID != -1) {
+                
+
+        } else {
+            Toast.makeText(getActivity(), "Id not found", Toast.LENGTH_LONG).show();
+        }
+
         return v;
     }
 }
