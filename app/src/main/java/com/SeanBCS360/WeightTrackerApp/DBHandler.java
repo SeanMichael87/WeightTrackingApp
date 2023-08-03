@@ -56,6 +56,7 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //USER AUTHENTICATION
     public int authenticateUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {"id"};
@@ -72,6 +73,7 @@ public class DBHandler extends SQLiteOpenHelper {
         return userId;
     }
 
+    //CREATE functions
     public int insertUserData(String username, String password, double goalWeight, String goalDate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -93,7 +95,8 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(ProfileTable.WEIGHT_TABLE, null, values);
         db.close();
     }
-
+    
+    //READ functions
     public double getGoalWeight(int userid) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {ProfileTable.GOAL_COL};
@@ -150,6 +153,32 @@ public class DBHandler extends SQLiteOpenHelper {
         return date;
     }
 
+    //UPDATE functions
+    public boolean updateProfile(long userid, String username, String password, float goalWeight) {
+       SQLiteDatabase db = getWritableDatabase();
+    
+       ContentValues values = new ContentValues();
+        if (!username.isEmpty()) {
+            values.put(ProfileTable.USERNAME_COL, username);
+        }
+        if (!password.isEmpty()) {
+            values.put(ProfileTable.PASS_COL, password);
+        }
+        if (goalWeight != 0) {
+            values.put(ProfileTable.GOAL_COL, goalWeight);
+        }
+       
+       int rowsUpdated = db.update(ProfileTable.TABLE_NAME, values, "user_id = ?",
+             new String[] { Float.toString(userid) });
+       return rowsUpdated > 0;
+}
+
+    public boolean deleteProfile(long userid) {
+   SQLiteDatabase db = getWritableDatabase();
+   int rowsDeleted = db.delete(ProfileTable.TABLE_Name, ProfileTable.USERID_COL + " = ?",
+         new String[] { Long.toString(userid) });
+   return rowsDeleted > 0;
+}
     
 
 }
