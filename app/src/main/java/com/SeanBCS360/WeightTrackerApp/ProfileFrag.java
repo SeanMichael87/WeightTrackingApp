@@ -1,9 +1,13 @@
 package com.SeanBCS360.WeightTrackerApp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -17,8 +21,9 @@ public class ProfileFrag extends Fragment {
     EditText changeUsername;
     EditText changePassword;
     EditText changeGoalWeight;
-    Button  delete;
+    Button delete;
     Button  update;
+    float newGoalWeight;
     DBHandler db;
 
     public ProfileFrag() {
@@ -30,7 +35,7 @@ public class ProfileFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-         View v = inflater.inflate(R.layout.fragment_dash, container, false);
+         View v = inflater.inflate(R.layout.fragment_profile, container, false);
 
         db = new DBHandler(getActivity());
         changeUsername = v.findViewById(R.id.profile_username);
@@ -42,14 +47,28 @@ public class ProfileFrag extends Fragment {
         UserSessionManager manager = new UserSessionManager(requireActivity());
         int userID = manager.getUserId();
 
+        String newUsername = changeUsername.getText().toString();
+        String newPassword = changePassword.getText().toString();
+
+        if(!changeGoalWeight.getText().toString().isEmpty()) {
+            newGoalWeight = Float.parseFloat(changeGoalWeight.getText().toString());
+        } else {
+            newGoalWeight = 0f;
+        }
+
         if (userID != -1) {
-            update.onClickListener(view -> {
-                String newUsername = changeUsername.getText().toString();
-                String newPassword = changePassword.getText().toString();
-                float newGoalWeight = Float.parse(changeGoalWeight.getText().toString());
-                db.updateProfile(userID, newUsername, newPassword, newGoalWeight)
-                Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show(); 
+            update.setOnClickListener(view -> {
+
+                db.updateProfile(userID, newUsername, newPassword, newGoalWeight);
+                Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show();
                 });
+
+            delete.setOnClickListener(view -> {
+                db.deleteProfile(userID);
+
+                Intent i = new Intent(requireContext(), LoginActivity.class);
+                startActivity(i);
+            });
 
         } else {
             Toast.makeText(getActivity(), "Id not found", Toast.LENGTH_LONG).show();

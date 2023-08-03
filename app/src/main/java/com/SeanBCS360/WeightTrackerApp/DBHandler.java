@@ -154,7 +154,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //UPDATE functions
-    public boolean updateProfile(long userid, String username, String password, float goalWeight) {
+    public void updateProfile(long userid, String username, String password, float goalWeight) {
        SQLiteDatabase db = getWritableDatabase();
     
        ContentValues values = new ContentValues();
@@ -164,19 +164,23 @@ public class DBHandler extends SQLiteOpenHelper {
         if (!password.isEmpty()) {
             values.put(ProfileTable.PASS_COL, password);
         }
-        if (goalWeight != 0) {
+        if (goalWeight != 0f) {
             values.put(ProfileTable.GOAL_COL, goalWeight);
         }
        
-       int rowsUpdated = db.update(ProfileTable.TABLE_NAME, values, "user_id = ?",
+       int rowsUpdated = db.update(ProfileTable.PROFILE_TABLE, values, "id = ?",
              new String[] { Float.toString(userid) });
-       return rowsUpdated > 0;
+//       return rowsUpdated > 0;
 }
 
     public boolean deleteProfile(long userid) {
    SQLiteDatabase db = getWritableDatabase();
-   int rowsDeleted = db.delete(ProfileTable.TABLE_Name, ProfileTable.USERID_COL + " = ?",
+   int rowsDeleted = db.delete(ProfileTable.PROFILE_TABLE, ProfileTable.ID_COL + " = ?",
          new String[] { Long.toString(userid) });
+
+   db.delete(ProfileTable.WEIGHT_TABLE, ProfileTable.USERID_COL + " = ?",
+                new String[] { Long.toString(userid) });
+
    return rowsDeleted > 0;
 }
     
