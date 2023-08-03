@@ -13,6 +13,13 @@ import androidx.fragment.app.Fragment;
  * create an instance of this fragment.
  */
 public class ProfileFrag extends Fragment {
+    
+    EditText changeUsername;
+    EditText changePassword;
+    EditText changeGoalWeight;
+    Button  delete;
+    Button  update;
+    DBHandler db;
 
     public ProfileFrag() {
         // Required empty public constructor
