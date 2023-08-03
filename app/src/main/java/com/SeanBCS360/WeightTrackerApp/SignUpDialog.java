@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -71,8 +72,7 @@ public class SignUpDialog extends DialogFragment {
                     String userName = username.getText().toString();
                     String passWord = password.getText().toString();
 
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-                    String todayDate = sdf.format(new Date());
+                    String todayDate = getDate();
 
                     float currWeight = Float.parseFloat(currentWeight.getText().toString());
                     float gWeight = Float.parseFloat(goalWeight.getText().toString());
@@ -92,6 +92,16 @@ public class SignUpDialog extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    public String getDate() {
+        Date currentDate = new Date();
+        // Define the desired date format
+        String dateFormatPattern = "EEEE, MMMM d, yyyy";
+        // Create a SimpleDateFormat object with the specified pattern and locale
+        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.US);
+
+        return dateFormat.format(currentDate);
     }
 
 }

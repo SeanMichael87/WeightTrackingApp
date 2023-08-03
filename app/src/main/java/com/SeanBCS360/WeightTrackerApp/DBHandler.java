@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "user_profile.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
 
     public DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -43,15 +43,16 @@ public class DBHandler extends SQLiteOpenHelper {
             //Create the user History Table
         db.execSQL("CREATE TABLE IF NOT EXISTS " + ProfileTable.WEIGHT_TABLE + " ("
                 + ProfileTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + ProfileTable.USERID_COL + " INTEGER UNIQUE NOT NULL,"
+                + ProfileTable.USERID_COL + " INTEGER NOT NULL,"
                 + ProfileTable.CURRENT_COL+ " REAL NOT NULL,"
                 + ProfileTable.CURR_DATE_COL+ " TEXT NOT NULL,"
                 + "FOREIGN KEY (user_id) REFERENCES " + ProfileTable.PROFILE_TABLE + "(id)" + ")");
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("drop table if exists " + ProfileTable.PROFILE_TABLE);
+        onCreate(db);
     }
 
     public int authenticateUser(String username, String password) {
@@ -63,7 +64,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         int userId = -1; // Default value if user not found
         if (cursor != null && cursor.moveToFirst()) {
-            userId = cursor.getInt(Math.abs(cursor.getColumnIndex("id")));
+            userId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
             cursor.close();
         }
         db.close();
@@ -79,7 +80,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(ProfileTable.GOAL_DATE_COL, goalDate);
         long userId = db.insert(ProfileTable.PROFILE_TABLE, null, values);
         db.close();
-        return (int) userId;
+        return (int) userId; //Will be used for authentication and validation of data
     }
 
     public void insertWeightData(int userId, double weight, String weightDate) {
@@ -92,12 +93,28 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public double getGoalWeight(int userid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {ProfileTable.GOAL_COL};
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(userid)};
+        Cursor cursor = db.query(ProfileTable.PROFILE_TABLE, columns, selection, selectionArgs, null, null, null);
+
+        double weight = -1;
+        if (cursor != null && cursor.moveToFirst()) {
+            weight = cursor.getDouble(cursor.getColumnIndexOrThrow(ProfileTable.GOAL_COL));
+            cursor.close();
+        }
+        db.close();
+        return weight;
+    }
+
     public List<Double> getUserWeights(int userId) {
         List<Double> weights = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 "weight_data",
-                new String[]{"weight"},
+                new String[]{ProfileTable.CURRENT_COL},
                 "user_id = ?",
                 new String[]{String.valueOf(userId)},
                 null,
@@ -107,13 +124,29 @@ public class DBHandler extends SQLiteOpenHelper {
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
-                double weight = cursor.getDouble(Math.abs(cursor.getColumnIndex(ProfileTable.CURRENT_COL)));
+                double weight = cursor.getDouble(cursor.getColumnIndexOrThrow(ProfileTable.CURRENT_COL));
                 weights.add(weight);
             }
             cursor.close();
         }
         db.close();
         return weights;
+    }
+
+    public String getGoalDate(int userid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {ProfileTable.GOAL_DATE_COL};
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(userid)};
+        Cursor cursor = db.query(ProfileTable.PROFILE_TABLE, columns, selection, selectionArgs, null, null, null);
+
+        String date = "";
+        if (cursor != null && cursor.moveToFirst()) {
+            date = cursor.getString(cursor.getColumnIndexOrThrow(ProfileTable.GOAL_DATE_COL));
+            cursor.close();
+        }
+        db.close();
+        return date;
     }
 
     

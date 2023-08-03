@@ -53,6 +53,7 @@
                         android:paddingRight="15sp"
                         android:paddingBottom="5sp" />
                     <TextView
+                        android:id="@+id/current_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="200.45 lbs"
@@ -87,9 +88,10 @@
                         android:textSize="24sp"
                         android:textStyle="bold" />
                     <TextView
+                        android:id="@+id/dash_goal_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="100.25 lbs"
+                        android:text="@string/dash_goal"
                         android:textSize="35sp"
                         android:paddingBottom="10sp"
                         android:gravity="center"/>
@@ -123,6 +125,7 @@
                         android:paddingRight="15sp"
                         android:paddingBottom="5sp" />
                     <TextView
+                        android:id="@+id/difference"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="-10 lbs"
@@ -157,6 +160,7 @@
                         android:textSize="24sp"
                         android:textStyle="bold" />
                     <TextView
+                        android:id="@+id/days_to_goal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="90"
@@ -177,7 +181,7 @@
                 android:layout_width="278dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="30dp"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@drawable/daily_weight_box"
                 android:drawablePadding="10dp"
                 android:gravity="center"
@@ -187,6 +191,7 @@
                 android:textColorHighlight="@color/cardview_dark_background" />
 
             <Button
+                android:id="@+id/weight_button"
                 android:layout_width="67dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"

@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         dialog.show(manager, "Sign Up");
     }
 
-
     public void enterMainActivity() {
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(i);
