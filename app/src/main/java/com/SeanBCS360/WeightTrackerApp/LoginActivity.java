@@ -32,10 +32,10 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(view -> {
            db = new DBHandler(LoginActivity.this);
-            int userID= db.authenticateUser(username.getText().toString(), password.getText().toString());
-            if(userID > -1) {
+            int userId= db.authenticateUser(username.getText().toString(), password.getText().toString());
+            if(userId > -1) {
                 UserSessionManager sessionManager = new UserSessionManager(this);
-                sessionManager.setUserId(userID);
+                sessionManager.setUserId(userId);
                 enterMainActivity();
             } else {
                 CharSequence text = "Login Failed!";
