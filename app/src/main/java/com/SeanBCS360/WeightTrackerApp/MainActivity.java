@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         super.onStart();
         db = new DBHandler(this);
         manager = new UserSessionManager(this);
-        int userid = manager.getUserId();
+        int userId = manager.getUserId();
 
-        if(!Boolean.parseBoolean(db.getSMSState(userid))) {
+        if(!Boolean.parseBoolean(db.getSMSState(userId))) {
             showSmsDialog();
         }
 
