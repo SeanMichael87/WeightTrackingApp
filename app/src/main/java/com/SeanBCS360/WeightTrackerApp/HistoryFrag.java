@@ -36,10 +36,10 @@ public class HistoryFrag extends Fragment implements DataAdapter.OnDeleteButtonC
         recyclerView = v.findViewById(R.id.recyclerview);
 
         UserSessionManager manager = new UserSessionManager(requireActivity());
-        int userID = manager.getUserId();
+        int userId = manager.getUserId();
         db = new DBHandler(getActivity());
 
-        dataList = db.getAllData(userID);
+        dataList = db.getAllData(userId);
         dataAdapter = new DataAdapter(dataList, this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
