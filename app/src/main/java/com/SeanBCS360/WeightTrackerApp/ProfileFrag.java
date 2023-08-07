@@ -45,7 +45,7 @@ public class ProfileFrag extends Fragment {
         update = v.findViewById(R.id.update_profile);     
 
         UserSessionManager manager = new UserSessionManager(requireActivity());
-        int userID = manager.getUserId();
+        int userId = manager.getUserId();
 
         String newUsername = changeUsername.getText().toString();
         String newPassword = changePassword.getText().toString();
@@ -59,7 +59,7 @@ public class ProfileFrag extends Fragment {
         if (userID != -1) {
             update.setOnClickListener(view -> {
 
-                if(db.updateProfile(userID, newUsername, newPassword, newGoalWeight)) {
+                if(db.updateProfile(userId, newUsername, newPassword, newGoalWeight)) {
                     Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show();
                 }
 
