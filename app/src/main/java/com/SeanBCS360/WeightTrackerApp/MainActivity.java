@@ -12,6 +12,8 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     NavigationBarView navigationBarView;
+    DBHandler db;
+    UserSessionManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,14 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     @Override
     protected void onStart() {
         super.onStart();
-        showSmsDialog();
+        db = new DBHandler(this);
+        manager = new UserSessionManager(this);
+        int userid = manager.getUserId();
+
+        if(!Boolean.parseBoolean(db.getSMSState(userid))) {
+            showSmsDialog();
+        }
+
     }
 
     DashFrag newFrag = new DashFrag();

@@ -59,15 +59,18 @@ public class ProfileFrag extends Fragment {
         if (userID != -1) {
             update.setOnClickListener(view -> {
 
-                db.updateProfile(userID, newUsername, newPassword, newGoalWeight);
-                Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show();
+                if(db.updateProfile(userID, newUsername, newPassword, newGoalWeight)) {
+                    Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show();
+                }
+
                 });
 
             delete.setOnClickListener(view -> {
-                db.deleteProfile(userID);
+                if(db.deleteProfile(userID)) {
+                    Intent i = new Intent(requireContext(), LoginActivity.class);
+                    startActivity(i);
+                }
 
-                Intent i = new Intent(requireContext(), LoginActivity.class);
-                startActivity(i);
             });
 
         } else {

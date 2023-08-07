@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Row card to be used to input User data from input and database-->
+<!--This will be implemented with RecyclerView to have scrollable data-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/history_card"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/date"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvWeight"
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/weight"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/editButton"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:tooltipText="Edit Weight"
+        android:contentDescription="@string/edit_button"
+        android:src="@drawable/baseline_edit_24"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_width="65dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:clickable="true"
+        android:contentDescription="@string/delete"
+        android:src="@drawable/baseline_delete_forever_24"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>

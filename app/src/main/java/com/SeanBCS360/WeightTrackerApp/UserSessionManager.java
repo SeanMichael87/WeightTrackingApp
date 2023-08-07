@@ -26,4 +26,5 @@ public class UserSessionManager {
     public int getUserId() {
         return pref.getInt(KEY_USER_ID, -1); // -1 indicates default value if not found
     }
+
 }

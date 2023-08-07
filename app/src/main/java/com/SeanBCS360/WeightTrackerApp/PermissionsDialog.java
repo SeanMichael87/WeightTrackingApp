@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 public class PermissionsDialog extends DialogFragment {
+
+    UserSessionManager manager;
+    DBHandler db;
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -21,7 +24,10 @@ public class PermissionsDialog extends DialogFragment {
         builder.setView(inflater.inflate(R.layout.dialog_sms, null))
                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       // START THE GAME!
+                       db = new DBHandler(requireActivity());
+                       manager = new UserSessionManager(requireActivity());
+                       int userid = manager.getUserId();
+                       db.updateSMSState(userid);
                    }
                })
                .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {
