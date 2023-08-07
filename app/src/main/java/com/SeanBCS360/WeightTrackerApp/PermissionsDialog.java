@@ -26,8 +26,8 @@ public class PermissionsDialog extends DialogFragment {
                    public void onClick(DialogInterface dialog, int id) {
                        db = new DBHandler(requireActivity());
                        manager = new UserSessionManager(requireActivity());
-                       int userid = manager.getUserId();
-                       db.updateSMSState(userid);
+                       int userId = manager.getUserId();
+                       db.updateSMSState(userId);
                    }
                })
                .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {
