@@ -3,6 +3,7 @@ package com.SeanBCS360.WeightTrackerApp;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+//Used to save and get the userID information for account
 public class UserSessionManager {
 
     private static final String PREF_NAME = "UserSessionPref";
