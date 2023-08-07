@@ -79,8 +79,8 @@ public class SignUpDialog extends DialogFragment {
 
                     String goalDate = calDate.getText().toString();
 
-                    int userID = db.insertUserData(userName, passWord, gWeight, goalDate);
-                    db.insertWeightData(userID, currWeight, todayDate);
+                    int userId = db.insertUserData(userName, passWord, gWeight, goalDate);
+                    db.insertWeightData(userId, currWeight, todayDate);
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
 
