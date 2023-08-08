@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
     private static final String DB_NAME = "user_prof.db";
-    private static final int DB_VERSION = 4;
+    private static final int DB_VERSION = 5;
 
     public DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -24,6 +24,7 @@ public class DBHandler extends SQLiteOpenHelper {
         private static final String USERID_COL = "user_id";
         private static final String USERNAME_COL = "username";
         private static final String PASS_COL = "password";
+        private static final String PHONE_COL = "phone_numb";
         private static final String CURRENT_COL = "current_weight";
         private static final String CURR_DATE_COL = "curr_date";
         private static final String GOAL_COL = "goal_weight";
@@ -38,6 +39,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 + ProfileTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProfileTable.USERNAME_COL + " TEXT UNIQUE NOT NULL,"
                 + ProfileTable.PASS_COL + " TEXT NOT NULL,"
+                + ProfileTable.PHONE_COL + " TEXT NOT NULL,"
                 + ProfileTable.GOAL_COL + " REAL NOT NULL,"
                 + ProfileTable.GOAL_DATE_COL + " TEXT NOT NULL,"
                 + ProfileTable.SMS_STATE_COL + " TEXT NOT NULL)");
@@ -76,11 +78,12 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //CREATE functions
-    public int insertUserData(String username, String password, double goalWeight, String goalDate) {
+    public int insertUserData(String username, String password, String phoneNumber, double goalWeight, String goalDate) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ProfileTable.USERNAME_COL, username);
         values.put(ProfileTable.PASS_COL, password);
+        values.put(ProfileTable.PHONE_COL, password);
         values.put(ProfileTable.GOAL_COL, goalWeight);
         values.put(ProfileTable.GOAL_DATE_COL, goalDate);
         values.put(ProfileTable.SMS_STATE_COL, "false");
