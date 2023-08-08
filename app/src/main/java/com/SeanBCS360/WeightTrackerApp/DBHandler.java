@@ -197,7 +197,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     //UPDATE functions
-    public boolean updateProfile(long userid, String username, String password, float goalWeight) {
+    public boolean updateProfile(long userid, String username, String password, String phoneNum, float goalWeight) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -206,6 +206,9 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         if (!password.isEmpty()) {
             values.put(ProfileTable.PASS_COL, password);
+        }
+        if (!password.isEmpty()) {
+            values.put(ProfileTable.PHONE_COL, phoneNum);
         }
         if (goalWeight != 0f) {
             values.put(ProfileTable.GOAL_COL, goalWeight);
