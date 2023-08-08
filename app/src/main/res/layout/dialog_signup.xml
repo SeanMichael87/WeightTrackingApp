@@ -54,6 +54,21 @@
             android:textColorHighlight="@color/cardview_dark_background" />
 
         <EditText
+            android:id="@+id/phone_number"
+            android:layout_width="fill_parent"
+            android:layout_height="50sp"
+            android:layout_marginTop="20dp"
+            android:autofillHints="Phone Number"
+            android:background="@drawable/custom_input_box"
+            android:drawableStart="@drawable/pass_lock_icon"
+            android:drawablePadding="10dp"
+            android:hint="Enter Phone Number"
+            android:inputType="phone"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/cardview_dark_background" />
+
+        <EditText
             android:id="@+id/curr_weight"
             android:layout_width="fill_parent"
             android:layout_height="50sp"
@@ -69,19 +84,19 @@
             android:textColorHighlight="@color/cardview_dark_background" />
 
         <EditText
-        android:id="@+id/goal_weight"
-        android:layout_width="fill_parent"
-        android:layout_height="50sp"
-        android:layout_marginTop="20dp"
-        android:autofillHints="Goal Weight"
-        android:background="@drawable/custom_input_box"
-        android:drawableStart="@drawable/baseline_monitor_weight_24"
-        android:drawablePadding="10dp"
-        android:hint="@string/goal_weight"
-        android:inputType="numberDecimal"
-        android:padding="8dp"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/cardview_dark_background" />
+            android:id="@+id/goal_weight"
+            android:layout_width="fill_parent"
+            android:layout_height="50sp"
+            android:layout_marginTop="20dp"
+            android:autofillHints="Goal Weight"
+            android:background="@drawable/custom_input_box"
+            android:drawableStart="@drawable/baseline_monitor_weight_24"
+            android:drawablePadding="10dp"
+            android:hint="@string/goal_weight"
+            android:inputType="numberDecimal"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textColorHighlight="@color/cardview_dark_background" />
 
         <TextView
             android:id="@+id/cal_date"
