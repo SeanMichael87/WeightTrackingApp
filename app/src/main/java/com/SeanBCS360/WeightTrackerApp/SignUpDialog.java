@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +27,6 @@ import java.util.Locale;
  */
 public class SignUpDialog extends DialogFragment {
 
-    ImageView calenderIcon;
     public DBHandler db;
 
     @NonNull
@@ -72,7 +70,7 @@ public class SignUpDialog extends DialogFragment {
                 .setPositiveButton("Sign Up", (dialog, id) -> {
                     String userName = username.getText().toString();
                     String passWord = password.getText().toString();
-                    String phoneNumber = phoneNumber.getText().toString();
+                    String phoneNum = phoneNumber.getText().toString();
 
                     String todayDate = getDate();
 
@@ -81,7 +79,7 @@ public class SignUpDialog extends DialogFragment {
 
                     String goalDate = calDate.getText().toString();
 
-                    int userId = db.insertUserData(userName, passWord, phoneNumber, gWeight, goalDate);
+                    int userId = db.insertUserData(userName, passWord, phoneNum, gWeight, goalDate);
                     db.insertWeightData(userId, currWeight, todayDate);
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {

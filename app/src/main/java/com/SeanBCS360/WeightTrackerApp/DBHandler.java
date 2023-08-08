@@ -83,7 +83,7 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(ProfileTable.USERNAME_COL, username);
         values.put(ProfileTable.PASS_COL, password);
-        values.put(ProfileTable.PHONE_COL, password);
+        values.put(ProfileTable.PHONE_COL, phoneNumber);
         values.put(ProfileTable.GOAL_COL, goalWeight);
         values.put(ProfileTable.GOAL_DATE_COL, goalDate);
         values.put(ProfileTable.SMS_STATE_COL, "false");
@@ -207,7 +207,7 @@ public class DBHandler extends SQLiteOpenHelper {
         if (!password.isEmpty()) {
             values.put(ProfileTable.PASS_COL, password);
         }
-        if (!password.isEmpty()) {
+        if (!phoneNum.isEmpty()) {
             values.put(ProfileTable.PHONE_COL, phoneNum);
         }
         if (goalWeight != 0f) {

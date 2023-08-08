@@ -27,6 +27,7 @@ import java.util.Locale;
  */
 public class DashFrag extends Fragment {
 
+    private static final int PERMISSIONS_REQUEST_SMS = 0;
     TextView goalWeight;
     TextView weightOutput;
     TextView difference;
