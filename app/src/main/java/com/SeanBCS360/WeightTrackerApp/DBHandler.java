@@ -17,19 +17,17 @@ public class DBHandler extends SQLiteOpenHelper {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
-
     private static final class ProfileTable {
         private static final String PROFILE_TABLE = "userprofile";
         private static final String WEIGHT_TABLE = "weight_data";
         private static final String ID_COL = "id";
-        private static final String USERID_COL= "user_id";
+        private static final String USERID_COL = "user_id";
         private static final String USERNAME_COL = "username";
         private static final String PASS_COL = "password";
         private static final String CURRENT_COL = "current_weight";
         private static final String CURR_DATE_COL = "curr_date";
         private static final String GOAL_COL = "goal_weight";
         private static final String GOAL_DATE_COL = "goal_date";
-
         private static final String SMS_STATE_COL = "sms_state";
     }
 
@@ -40,16 +38,16 @@ public class DBHandler extends SQLiteOpenHelper {
                 + ProfileTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProfileTable.USERNAME_COL + " TEXT UNIQUE NOT NULL,"
                 + ProfileTable.PASS_COL + " TEXT NOT NULL,"
-                + ProfileTable.GOAL_COL+ " REAL NOT NULL,"
+                + ProfileTable.GOAL_COL + " REAL NOT NULL,"
                 + ProfileTable.GOAL_DATE_COL + " TEXT NOT NULL,"
                 + ProfileTable.SMS_STATE_COL + " TEXT NOT NULL)");
-    
+
         //Create the user Weight History Table with key reference to primary table
         db.execSQL("CREATE TABLE IF NOT EXISTS " + ProfileTable.WEIGHT_TABLE + " ("
                 + ProfileTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProfileTable.USERID_COL + " INTEGER NOT NULL,"
-                + ProfileTable.CURRENT_COL+ " REAL NOT NULL,"
-                + ProfileTable.CURR_DATE_COL+ " TEXT NOT NULL,"
+                + ProfileTable.CURRENT_COL + " REAL NOT NULL,"
+                + ProfileTable.CURR_DATE_COL + " TEXT NOT NULL,"
                 + "FOREIGN KEY (user_id) REFERENCES " + ProfileTable.PROFILE_TABLE + "(id)" + ")");
     }
 
@@ -100,9 +98,9 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(ProfileTable.WEIGHT_TABLE, null, values);
         db.close();
     }
-    
+
     //READ functions
-    public String getSMSState(int userid) {
+    public boolean getSMSState(int userid) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {ProfileTable.SMS_STATE_COL};
         String selection = "id = ?";
@@ -115,8 +113,9 @@ public class DBHandler extends SQLiteOpenHelper {
             cursor.close();
         }
         db.close();
-        return choice;
+        return Boolean.parseBoolean(choice);
     }
+
     public double getGoalWeight(int userid) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {ProfileTable.GOAL_COL};
@@ -196,9 +195,9 @@ public class DBHandler extends SQLiteOpenHelper {
 
     //UPDATE functions
     public boolean updateProfile(long userid, String username, String password, float goalWeight) {
-       SQLiteDatabase db = getWritableDatabase();
-    
-       ContentValues values = new ContentValues();
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues values = new ContentValues();
         if (!username.isEmpty()) {
             values.put(ProfileTable.USERNAME_COL, username);
         }
@@ -208,31 +207,43 @@ public class DBHandler extends SQLiteOpenHelper {
         if (goalWeight != 0f) {
             values.put(ProfileTable.GOAL_COL, goalWeight);
         }
-       
-       int rowsUpdated = db.update(ProfileTable.PROFILE_TABLE, values, "id = ?",
-             new String[] { Float.toString(userid) });
-       return rowsUpdated > 0;
+
+        int rowsUpdated = db.update(ProfileTable.PROFILE_TABLE, values, "id = ?",
+                new String[]{Float.toString(userid)});
+        return rowsUpdated > 0;
     }
 
-    public void updateSMSState(long userid) {
+    public void updateWeight(int id, String newWeight) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ProfileTable.CURRENT_COL, newWeight);
+
+        db.update(ProfileTable.WEIGHT_TABLE, values, "id = ?", new String[]{String.valueOf(id)});
+
+        db.close();
+    }
+
+    public void updateSMSState(long userid, String state) {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(ProfileTable.SMS_STATE_COL, "true");
+        values.put(ProfileTable.SMS_STATE_COL, state);
         db.update(ProfileTable.PROFILE_TABLE, values, "id = ?",
-                new String[] {Float.toString(userid)});
+                new String[]{Float.toString(userid)});
     }
 
     public boolean deleteProfile(long userid) {
-   SQLiteDatabase db = getWritableDatabase();
-   int rowsDeleted = db.delete(ProfileTable.PROFILE_TABLE, ProfileTable.ID_COL + " = ?",
-         new String[] { Long.toString(userid) });
+        SQLiteDatabase db = getWritableDatabase();
+        int rowsDeleted = db.delete(ProfileTable.PROFILE_TABLE, ProfileTable.ID_COL + " = ?",
+                new String[]{Long.toString(userid)});
 
-   db.delete(ProfileTable.WEIGHT_TABLE, ProfileTable.USERID_COL + " = ?",
-                new String[] { Long.toString(userid) });
+        db.delete(ProfileTable.WEIGHT_TABLE, ProfileTable.USERID_COL + " = ?",
+                new String[]{Long.toString(userid)});
 
-   return rowsDeleted > 0;
-}
+        return rowsDeleted > 0;
+    }
+
     public boolean deleteRowWeight(int id) {
         SQLiteDatabase db = getWritableDatabase();
         int rowsDeleted = db.delete(ProfileTable.WEIGHT_TABLE, ProfileTable.ID_COL + " = ?",

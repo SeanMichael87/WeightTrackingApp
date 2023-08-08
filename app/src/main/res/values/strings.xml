@@ -35,4 +35,7 @@
     <string name="goal_date">Goal Date</string>
     <string name="dash_goal">100.25 lbs</string>
     <string name="add_data">add data</string>
+    <string name="enter_new_weight">Enter new weight</string>
+    <string name="update_weight">Update Weight</string>
+    <string name="update">Update</string>
 </resources>

@@ -14,10 +14,13 @@ import java.util.List;
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     private List<DataModel> dataList;
-    private OnDeleteButtonClickListener onDeleteButtonClickListener;
+    private final OnDeleteButtonClickListener onDeleteButtonClickListener;
+    private final OnEditButtonClickListener editButtonClickListener;
 
-    public DataAdapter(List<DataModel> dataList, OnDeleteButtonClickListener onDeleteButtonClickListener) {
+    public DataAdapter(List<DataModel> dataList, OnEditButtonClickListener editButtonClickListener,
+                       OnDeleteButtonClickListener onDeleteButtonClickListener) {
         this.dataList = dataList;
+        this.editButtonClickListener = editButtonClickListener;
         this.onDeleteButtonClickListener = onDeleteButtonClickListener;
     }
 
@@ -43,30 +46,41 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         dataList = newDataList;
         notifyDataSetChanged();
     }
+    public interface OnEditButtonClickListener {
+        void onEditButtonClick(int position);
+    }
     public interface OnDeleteButtonClickListener {
+
         void onDeleteButtonClick(int position);
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView currentWeights;
-        private TextView associatedDates;
-        private ImageView delButton;
+        private final TextView currentWeights;
+        private final TextView associatedDates;
+        private final ImageView editButton;
+        private final ImageView delButton;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             associatedDates = itemView.findViewById(R.id.tvDate);
             currentWeights = itemView.findViewById(R.id.tvWeight);
+            editButton = itemView.findViewById(R.id.editButton);
             delButton = itemView.findViewById(R.id.btnDelete);
 
             // Set click listeners for edit and delete actions (if needed)
+            editButton.setOnClickListener(view-> {
+                if (editButtonClickListener != null) {
+                    editButtonClickListener.onEditButtonClick(getAdapterPosition());
+                }
+            });
             delButton.setOnClickListener(view -> {
                 if (onDeleteButtonClickListener != null) {
                     onDeleteButtonClickListener.onDeleteButtonClick(getAdapterPosition());
                 }
-                    }
-            );
-            // itemView.findViewById(R.id.buttonEdit).setOnClickListener(...);
+            });
         }
 
         public void bindData(DataModel data) {

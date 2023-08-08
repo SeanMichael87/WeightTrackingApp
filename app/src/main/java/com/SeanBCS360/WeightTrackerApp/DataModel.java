@@ -1,10 +1,10 @@
 package com.SeanBCS360.WeightTrackerApp;
 
 public class DataModel {
-    private int id;
-    private int userid;
+    private final int id;
+    private final int userid;
     private String weight;
-    private String date;
+    private final String date;
 
     public DataModel(int id, int userid, String weight, String date) {
         this.id = id;
@@ -27,6 +27,10 @@ public class DataModel {
 
     public String getDate() {
         return date;
+    }
+
+    public void setWeight(String newWeight){
+        this.weight = newWeight;
     }
 }
 

@@ -2,7 +2,6 @@ package com.SeanBCS360.WeightTrackerApp;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 
@@ -22,18 +21,16 @@ public class PermissionsDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
 
         builder.setView(inflater.inflate(R.layout.dialog_sms, null))
-               .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int id) {
-                       db = new DBHandler(requireActivity());
-                       manager = new UserSessionManager(requireActivity());
-                       int userId = manager.getUserId();
-                       db.updateSMSState(userId);
-                   }
+               .setPositiveButton(R.string.accept, (dialog, id) -> {
+                   db = new DBHandler(requireActivity());
+                   manager = new UserSessionManager(requireActivity());
+                   int userId = manager.getUserId();
+                   manager.setIsFirstLogin(userId, false);
+
+                   db.updateSMSState(userId, "true");
                })
-               .setNegativeButton(R.string.deny, new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int id) {
-                       // User cancelled the dialog
-                   }
+               .setNegativeButton(R.string.deny, (dialog, id) -> {
+                   // User cancelled the dialog
                });
         // Create the AlertDialog object and return it
         return builder.create();

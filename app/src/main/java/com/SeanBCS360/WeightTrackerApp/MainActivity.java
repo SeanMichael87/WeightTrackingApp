@@ -30,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         db = new DBHandler(this);
         manager = new UserSessionManager(this);
         int userId = manager.getUserId();
+        boolean isFirstLogin = manager.isFirstLogin(userId);
 
-        if(!Boolean.parseBoolean(db.getSMSState(userId))) {
+        if(isFirstLogin) {
             showSmsDialog();
         }
 

@@ -9,9 +9,9 @@ public class UserSessionManager {
     private static final String PREF_NAME = "UserSessionPref";
     private static final String KEY_USER_ID = "userId";
 
-    private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
-    private Context context;
+    private final SharedPreferences pref;
+    private final SharedPreferences.Editor editor;
+    private final Context context;
 
     public UserSessionManager(Context context) {
         this.context = context;
@@ -26,6 +26,15 @@ public class UserSessionManager {
 
     public int getUserId() {
         return pref.getInt(KEY_USER_ID, -1); // -1 indicates default value if not found
+    }
+
+    public void setIsFirstLogin(int userId, boolean isFirstLogin){
+        editor.putBoolean(Integer.toString(userId), isFirstLogin);
+        editor.apply();
+
+    }
+    public boolean isFirstLogin(int userId) {
+        return pref.getBoolean(Integer.toString(userId), true);
     }
 
 }

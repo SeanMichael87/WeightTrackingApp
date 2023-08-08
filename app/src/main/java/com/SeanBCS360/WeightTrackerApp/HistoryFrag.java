@@ -1,9 +1,12 @@
 package com.SeanBCS360.WeightTrackerApp;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +19,8 @@ import java.util.List;
  * Use the  factory method to
  * create an instance of this fragment.
  */
-public class HistoryFrag extends Fragment implements DataAdapter.OnDeleteButtonClickListener{
+public class HistoryFrag extends Fragment implements DataAdapter.OnDeleteButtonClickListener,
+DataAdapter.OnEditButtonClickListener{
 
     private RecyclerView recyclerView;
     private DataAdapter dataAdapter;
@@ -40,7 +44,8 @@ public class HistoryFrag extends Fragment implements DataAdapter.OnDeleteButtonC
         db = new DBHandler(getActivity());
 
         dataList = db.getAllData(userId);
-        dataAdapter = new DataAdapter(dataList, this);
+        dataAdapter = new DataAdapter(dataList, (DataAdapter.OnEditButtonClickListener) this,
+                this);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(dataAdapter);
@@ -63,4 +68,39 @@ public class HistoryFrag extends Fragment implements DataAdapter.OnDeleteButtonC
             dataAdapter.updateDataList(dataList); // Update the adapter
         }
     }
+    @Override
+    public void onEditButtonClick(int position) {
+        showUpdateWeightDialog(position);
+    }
+
+    private void showUpdateWeightDialog(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        View dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.edit_weight_dialog, null);
+        builder.setView(dialogView);
+
+        EditText editTextWeight = dialogView.findViewById(R.id.edit_weight);
+        Button buttonUpdate = dialogView.findViewById(R.id.button_update);
+
+        AlertDialog dialog = builder.create();
+
+        buttonUpdate.setOnClickListener(view -> {
+            String newWeight = editTextWeight.getText().toString().trim();
+            DataModel id = dataList.get(position);
+            int idToEdit = id.getId();
+
+            db = new DBHandler(requireContext());
+
+            if (!newWeight.isEmpty()) {
+                db.updateWeight(idToEdit, newWeight);
+                id.setWeight(newWeight);
+                dataAdapter.notifyItemChanged(position);
+                dialog.dismiss();
+            } else {
+                editTextWeight.setError("Please enter a valid weight");
+            }
+        });
+
+        dialog.show();
+    }
+
 }
