@@ -42,6 +42,7 @@ public class SignUpDialog extends DialogFragment {
 
         EditText username = v.findViewById(R.id.username);
         EditText password = v.findViewById(R.id.password);
+        EditText phoneNumber = v.findViewById(R.id.phone_number);
         EditText currentWeight = v.findViewById(R.id.curr_weight);
         EditText goalWeight = v.findViewById(R.id.goal_weight);
         TextView calDate = v.findViewById(R.id.cal_date);
@@ -71,6 +72,7 @@ public class SignUpDialog extends DialogFragment {
                 .setPositiveButton("Sign Up", (dialog, id) -> {
                     String userName = username.getText().toString();
                     String passWord = password.getText().toString();
+                    String phoneNumber = phoneNumber.getText().toString();
 
                     String todayDate = getDate();
 
@@ -79,7 +81,7 @@ public class SignUpDialog extends DialogFragment {
 
                     String goalDate = calDate.getText().toString();
 
-                    int userId = db.insertUserData(userName, passWord, gWeight, goalDate);
+                    int userId = db.insertUserData(userName, passWord, phoneNumber, gWeight, goalDate);
                     db.insertWeightData(userId, currWeight, todayDate);
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
