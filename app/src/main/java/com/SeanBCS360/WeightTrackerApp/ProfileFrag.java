@@ -21,6 +21,7 @@ public class ProfileFrag extends Fragment {
 
     EditText changeUsername;
     EditText changePassword;
+    EditText changePhoneNum;
     EditText changeGoalWeight;
     SwitchCompat smsSwitch;
     Button delete;
@@ -42,6 +43,7 @@ public class ProfileFrag extends Fragment {
         db = new DBHandler(getActivity());
         changeUsername = v.findViewById(R.id.profile_username);
         changePassword = v.findViewById(R.id.profile_password);
+        changePhoneNum = v.findViewById(R.id.profile_phone);
         changeGoalWeight = v.findViewById(R.id.profile_goal_weight);
         smsSwitch = v.findViewById(R.id.sms_switch);
         delete = v.findViewById(R.id.delete_profile);
@@ -52,6 +54,7 @@ public class ProfileFrag extends Fragment {
 
         String newUsername = changeUsername.getText().toString();
         String newPassword = changePassword.getText().toString();
+        String newPhoneNum = changePhoneNum.getText().toString();
 
         if (!changeGoalWeight.getText().toString().isEmpty()) {
             newGoalWeight = Float.parseFloat(changeGoalWeight.getText().toString());
@@ -71,7 +74,7 @@ public class ProfileFrag extends Fragment {
             });
             update.setOnClickListener(view -> {
 
-                if (db.updateProfile(userId, newUsername, newPassword, newGoalWeight)) {
+                if (db.updateProfile(userId, newUsername, newPassword, newPhoneNum, newGoalWeight)) {
                     Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show();
                 }
 
