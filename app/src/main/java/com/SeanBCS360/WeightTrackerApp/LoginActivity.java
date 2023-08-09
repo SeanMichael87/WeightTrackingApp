@@ -23,12 +23,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // not permanent code - used for testing navigation
-
         loginButton = findViewById(R.id.login);
         signUp = findViewById(R.id.signup);
         username =findViewById(R.id.username);
         password = findViewById(R.id.password);
+        forgotPass = findViewById(R.id.reset_pass);
 
         loginButton.setOnClickListener(view -> {
            db = new DBHandler(LoginActivity.this);
@@ -46,12 +45,18 @@ public class LoginActivity extends AppCompatActivity {
                      
         });
         signUp.setOnClickListener(view -> showSignUpDialog());
+        forgotPass.setOnClickListener(view -> showForgotPassDialog());
     }
 
     void showSignUpDialog() {
         FragmentManager manager = getSupportFragmentManager();
         SignUpDialog dialog = new SignUpDialog();
         dialog.show(manager, "Sign Up");
+    }
+    void showForgotPassDialog() {
+        FragmentManager manager = getSupportFragmentManager();
+        ForgotPassDialog dialog = new ForgotPassDialog();
+        dialog.show(manager, "Forgot Password");
     }
 
     public void enterMainActivity() {
