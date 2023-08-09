@@ -49,8 +49,7 @@ public class SignUpDialog extends DialogFragment {
 
         builder.setView(v)
                 .setPositiveButton("Sign Up", (dialog, id) -> {
-
-                  
+                    sendPasswordSMS(userId); 
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
 
@@ -62,6 +61,14 @@ public class SignUpDialog extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    private void sendPasswordSMS(int userId) {
+        String phoneNumber = db.getPhoneNumber(userId);
+        String message = "Your password is: ";
+
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage("1"+ phoneNumber, null, message, null, null);
     }
 
 
