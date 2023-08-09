@@ -25,7 +25,7 @@ import java.util.Locale;
  * Use the {@link } factory method to
  * create an instance of this fragment.
  */
-public class SignUpDialog extends DialogFragment {
+public class ForgotPassDialog extends DialogFragment {
 
     public DBHandler db;
 
@@ -38,21 +38,23 @@ public class SignUpDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_get_pass, null);
 
+        EditText username = v.findViewById(R.id.username);
         EditText phoneNumber = v.findViewById(R.id.phone_number);
 
         db = new DBHandler(getActivity());
+        
+        String enteredUserName = username.getText().toString();
+        String enteredPhoneNum = phoneNumber.getText().toString();
 
-        calDate.setOnClickListener(view -> {
-            String phoneNum = phoneNumber.getText().toString();
+        String queryPhoneNum;
 
-        });
 
         builder.setView(v)
                 .setPositiveButton("Sign Up", (dialog, id) -> {
+                    //if enterephone# correlates to entered useName -send message
                     sendPasswordSMS(userId); 
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
-
                     CharSequence text = "Come Back Soon!";
                     int duration = Toast.LENGTH_SHORT;
 
