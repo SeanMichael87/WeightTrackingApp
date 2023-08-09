@@ -174,6 +174,21 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return date;
     }
+    public String getPhoneNumber(int userid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {ProfileTable.PHONE_COL};
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(userid)};
+        Cursor cursor = db.query(ProfileTable.PROFILE_TABLE, columns, selection, selectionArgs, null, null, null);
+
+        String number = "";
+        if (cursor != null && cursor.moveToFirst()) {
+            number = cursor.getString(cursor.getColumnIndexOrThrow(ProfileTable.PHONE_COL));
+            cursor.close();
+        }
+        db.close();
+        return number;
+    }
 
     // Method to fetch all data from the weight database
     public List<DataModel> getAllData(int userID) {

@@ -37,4 +37,13 @@ public class UserSessionManager {
         return pref.getBoolean(Integer.toString(userId), true);
     }
 
+    public void setMessageSent(int userId, boolean messageSent){
+        editor.putBoolean(Integer.toString(userId), messageSent);
+        editor.apply();
+
+    }
+    public boolean messageSent(int userId) {
+        return pref.getBoolean(Integer.toString(userId), true);
+    }
+
 }

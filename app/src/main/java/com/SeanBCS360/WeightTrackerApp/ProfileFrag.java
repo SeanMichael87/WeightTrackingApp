@@ -23,7 +23,7 @@ import androidx.fragment.app.Fragment;
  */
 public class ProfileFrag extends Fragment {
 
-private static final int REQUEST_SMS_PERMISSION = 123;
+private static final int REQUEST_SMS_PERMISSION = 1;
     EditText changeUsername;
     EditText changePassword;
     EditText changePhoneNum;

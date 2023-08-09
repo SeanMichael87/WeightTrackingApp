@@ -1,6 +1,7 @@
 package com.SeanBCS360.WeightTrackerApp;
 
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import java.util.Locale;
  */
 public class DashFrag extends Fragment {
 
-    private static final int PERMISSIONS_REQUEST_SMS = 0;
+    private static final int PERMISSIONS_REQUEST_SMS = 1;
     TextView goalWeight;
     TextView weightOutput;
     TextView difference;
@@ -92,7 +93,18 @@ public class DashFrag extends Fragment {
                 weightDiff = weightDifference(getGoalWeight, updateWeight);
                 difference.setText(weightDiff);
                 dailyWeight.setText("");
+
+                if(manager.messageSent(userID)) {
+                    if (Float.parseFloat(weightDiff) <= 0f && db.getSMSState(userID)) {
+                        sendCongratulatorySMS(userID);
+                        manager.setMessageSent(userID, true);
+                    }
+                }
+
             }});
+
+
+
 
 
         } else {
@@ -138,5 +150,12 @@ public class DashFrag extends Fragment {
         LocalDate endDate = LocalDate.parse(todayDate, formatter);
         
         return Math.abs(ChronoUnit.DAYS.between(startDate, endDate));
+    }
+    private void sendCongratulatorySMS(int userId) {
+        String phoneNumber = db.getPhoneNumber(userId);
+        String message = "Congratulations on meeting your weight goals! Keep up the Great Work!";
+
+        SmsManager smsManager = SmsManager.getDefault();
+        smsManager.sendTextMessage("1"+ phoneNumber, null, message, null, null);
     }
 }
