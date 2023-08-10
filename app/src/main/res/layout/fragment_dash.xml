@@ -21,6 +21,7 @@
             android:background="@drawable/custom_input_box">
 
             <com.jjoe64.graphview.GraphView
+                android:id="@+id/graph"
                 android:layout_width="match_parent"
                 android:layout_height="300sp"
                 app:cornerRadius="20dp"/>

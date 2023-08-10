@@ -3,9 +3,11 @@ package com.SeanBCS360.WeightTrackerApp;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,55 +75,80 @@ public class SignUpDialog extends DialogFragment {
         });
 
         builder.setView(v)
-                .setPositiveButton("Sign Up", (dialog, id) -> {
-                    String userName = username.getText().toString();
-                    String passWord = password.getText().toString();
-                    String phoneNum = phoneNumber.getText().toString();
-
-                    String todayDate = getDate();
-
-                    float currWeight = Float.parseFloat(currentWeight.getText().toString());
-                    float gWeight = Float.parseFloat(goalWeight.getText().toString());
-
-                    String goalDate = calDate.getText().toString();
-
-                    // Input Validation
-                    boolean isValid = true;
-
-                    if (userName.length() < 4) {
-                        username.setError("Username must be at least 4 characters.");
-                        isValid = false;
-                    }
-
-                    if (passWord.length() < 5) {
-                        password.setError("Password must be at least 5 characters.");
-                        isValid = false;
-                    }
-
-                    if (phoneNum.length() != 11) {
-                        phoneNumber.setError("Phone number must be 11 digits.");
-                        isValid = false;
-                    }
-
-                    if (isValid) {
-                        // Validation succeeded, proceed with data insertion
-                        int userId = db.insertUserData(userName, passWord, phoneNum, gWeight, goalDate);
-                        db.insertWeightData(userId, currWeight, todayDate);
-
-                        // Dismiss the dialog after successful data insertion
-                        dialog.dismiss();
-                    }
-                })
+                .setPositiveButton("Sign Up", null) // Set click listener to null initially
                 .setNegativeButton("Quit", (dialog, id) -> {
-
                     CharSequence text = "Come Back Soon!";
                     int duration = Toast.LENGTH_SHORT;
 
                     Toast.makeText(getActivity(), text, duration).show();
+
+                    // Dismiss the dialog
+                    dialog.dismiss();
                 });
 
         // Create the AlertDialog object and return it
-        return builder.create();
+        AlertDialog alertDialog = builder.create();
+
+        // Had issue with original button not validating because it exits the lambda
+        // Set the positive button's click listener after creating the dialog
+        alertDialog.setOnShowListener(dialogInterface -> {
+            Button positiveButton = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            positiveButton.setOnClickListener(view -> {
+                String userName = username.getText().toString();
+                String passWord = password.getText().toString();
+                String phoneNum = phoneNumber.getText().toString();
+
+                String todayDate = getDate();
+
+                float currWeight = Float.parseFloat(currentWeight.getText().toString());
+                float gWeight = Float.parseFloat(goalWeight.getText().toString());
+
+                String goalDate = calDate.getText().toString();
+
+                // Input Validation
+                boolean isValid = true;
+
+                if (userName.length() < 4) {
+                    username.setError("Username must be at least 4 characters.");
+                    isValid = false;
+                }
+
+                if (passWord.length() < 5) {
+                    password.setError("Password must be at least 5 characters.");
+                    isValid = false;
+                }
+
+                if (phoneNum.length() != 11) {
+                    phoneNumber.setError("Phone number must be 11 digits.");
+                    isValid = false;
+                }
+
+                if (currWeight <= 80) {
+                    phoneNumber.setError("Enter a realistic weight");
+                    isValid = false;
+                }
+
+                if (gWeight <= 80) {
+                    phoneNumber.setError("Enter a healthy weight goal");
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    // Validation succeeded, proceed with data insertion
+                    int userId = db.insertUserData(userName, passWord, phoneNum, gWeight, goalDate);
+                    db.insertWeightData(userId, currWeight, todayDate);
+
+                    // Dismiss the dialog after successful data insertion
+                    alertDialog.dismiss();
+                }
+            });
+        });
+
+// Show the dialog
+        alertDialog.show();
+
+// Return the AlertDialog object
+        return alertDialog;
     }
 
     private String getDate() {
