@@ -30,12 +30,15 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         db = new DBHandler(this);
         manager = new UserSessionManager(this);
         int userId = manager.getUserId();
-        boolean isFirstLogin = manager.isFirstLogin(userId);
 
-        if(isFirstLogin) {
-            showSmsDialog();
+        if (userId != -1) { // Ensure userId is valid
+            boolean isFirstLogin = manager.isFirstLogin(userId);
+
+            if (isFirstLogin) {
+                showSmsDialog();
+                manager.setIsFirstLogin(userId, false); // Update the flag after showing the dialog
+            }
         }
-
     }
 
     DashFrag newFrag = new DashFrag();

@@ -57,38 +57,78 @@ private static final int REQUEST_SMS_PERMISSION = 1;
         UserSessionManager manager = new UserSessionManager(requireActivity());
         int userId = manager.getUserId();
 
-
         smsSwitch.setChecked(db.getSMSState(userId));
 
         if (userId != -1) {
             smsSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
-                    // Request SMS permission
+                    // Request SMS permission if user initially denied it
                     if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
                         ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.SEND_SMS}, REQUEST_SMS_PERMISSION);
                     } else {
-                        // Permission already granted, you can proceed with SMS-related operations
+                        // Permission already granted - set switch
                         db.updateSMSState(userId, "true");
                     }
                 } else {
                     db.updateSMSState(userId, "false");
                 }
             });
+
             update.setOnClickListener(view -> {
                 String newUsername = changeUsername.getText().toString();
                 String newPassword = changePassword.getText().toString();
                 String newPhoneNum = changePhoneNum.getText().toString();
+                String goalWeight = changeGoalWeight.getText().toString().trim();
 
-                if(!changeGoalWeight.getText().toString().isEmpty()) {
-                    newGoalWeight = Float.parseFloat(changeGoalWeight.getText().toString());
-                } else {
-                    newGoalWeight = 0f;
+                // Validate username
+                if (!newUsername.isEmpty()) {
+                    if (newUsername.length() < 4) {
+                        changeUsername.setError("Username is too short");
+                        return;
+                    }
+                }
+
+                // Validate password
+                if (!newPassword.isEmpty()) {
+                    if (newPassword.length() < 4) {
+                        changePassword.setError("Password is weak");
+                        return;
+                    }
+                }
+
+                // Validate Phone Number
+                if (!newPhoneNum.isEmpty()) {
+                    if (newPhoneNum.length() != 11) {
+                        changePhoneNum.setError("Phone number needs to be 11 digits");
+                        return;
+                    }
+                }
+
+                //Validate goal weight
+                try {
+                    if(!changeGoalWeight.getText().toString().isEmpty()) {
+                        newGoalWeight = Float.parseFloat(changeGoalWeight.getText().toString());
+                    } else {
+                        newGoalWeight = 0f;
+                    }
+                    if (newGoalWeight < 0) {
+                        changeGoalWeight.setError("Goal weight must be greater than 0.");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    changeGoalWeight.setError("Invalid goal weight format. Please enter a valid number.");
+                    return;
+                }
+
+                // Display an error message indicating that at least one field should be updated
+                if (newUsername.isEmpty() && newPassword.isEmpty() && newPhoneNum.isEmpty() && goalWeight.isEmpty()) {
+                    Toast.makeText(getActivity(), "Please update at least one field.", Toast.LENGTH_SHORT).show();
+                    return;
                 }
 
                 if (db.updateProfile(userId, newUsername, newPassword, newPhoneNum, newGoalWeight)) {
                     Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_LONG).show();
                 }
-
             });
 
             delete.setOnClickListener(view -> {
@@ -96,9 +136,7 @@ private static final int REQUEST_SMS_PERMISSION = 1;
                     Intent i = new Intent(requireContext(), LoginActivity.class);
                     startActivity(i);
                 }
-
             });
-
         } else {
             Toast.makeText(getActivity(), "Id not found", Toast.LENGTH_LONG).show();
         }

@@ -76,6 +76,21 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return userId;
     }
+    public int authenticateUserPhone(String username, String phoneNum) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {"id"};
+        String selection = "username = ? AND phone_numb = ?";
+        String[] selectionArgs = {username, phoneNum};
+        Cursor cursor = db.query(ProfileTable.PROFILE_TABLE, columns, selection, selectionArgs, null, null, null);
+
+        int userId = -1; // Default value if user not found
+        if (cursor != null && cursor.moveToFirst()) {
+            userId = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            cursor.close();
+        }
+        db.close();
+        return userId;
+    }
 
     //CREATE functions
     public int insertUserData(String username, String password, String phoneNumber, double goalWeight, String goalDate) {
@@ -188,6 +203,22 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         db.close();
         return number;
+    }
+
+    public String getPassword(int userid) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {ProfileTable.PASS_COL};
+        String selection = "id = ?";
+        String[] selectionArgs = {String.valueOf(userid)};
+        Cursor cursor = db.query(ProfileTable.PROFILE_TABLE, columns, selection, selectionArgs, null, null, null);
+
+        String password = "";
+        if (cursor != null && cursor.moveToFirst()) {
+            password = cursor.getString(cursor.getColumnIndexOrThrow(ProfileTable.PASS_COL));
+            cursor.close();
+        }
+        db.close();
+        return password;
     }
 
     // Method to fetch all data from the weight database

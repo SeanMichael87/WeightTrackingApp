@@ -27,7 +27,13 @@ import java.util.Locale;
  */
 public class SignUpDialog extends DialogFragment {
 
-    public DBHandler db;
+    private DBHandler db;
+    private EditText username;
+    private EditText password;
+    private EditText phoneNumber;
+    private EditText currentWeight;
+    private EditText goalWeight;
+    private TextView calDate;
 
     @NonNull
     @Override
@@ -38,12 +44,12 @@ public class SignUpDialog extends DialogFragment {
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View v = inflater.inflate(R.layout.dialog_signup, null);
 
-        EditText username = v.findViewById(R.id.username);
-        EditText password = v.findViewById(R.id.password);
-        EditText phoneNumber = v.findViewById(R.id.phone_number);
-        EditText currentWeight = v.findViewById(R.id.curr_weight);
-        EditText goalWeight = v.findViewById(R.id.goal_weight);
-        TextView calDate = v.findViewById(R.id.cal_date);
+        username = v.findViewById(R.id.username);
+        password = v.findViewById(R.id.password);
+        phoneNumber = v.findViewById(R.id.phone_number);
+        currentWeight = v.findViewById(R.id.curr_weight);
+        goalWeight = v.findViewById(R.id.goal_weight);
+        calDate = v.findViewById(R.id.cal_date);
 
         db = new DBHandler(getActivity());
 
@@ -79,8 +85,32 @@ public class SignUpDialog extends DialogFragment {
 
                     String goalDate = calDate.getText().toString();
 
-                    int userId = db.insertUserData(userName, passWord, phoneNum, gWeight, goalDate);
-                    db.insertWeightData(userId, currWeight, todayDate);
+                    // Input Validation
+                    boolean isValid = true;
+
+                    if (userName.length() < 4) {
+                        username.setError("Username must be at least 4 characters.");
+                        isValid = false;
+                    }
+
+                    if (passWord.length() < 5) {
+                        password.setError("Password must be at least 5 characters.");
+                        isValid = false;
+                    }
+
+                    if (phoneNum.length() != 11) {
+                        phoneNumber.setError("Phone number must be 11 digits.");
+                        isValid = false;
+                    }
+
+                    if (isValid) {
+                        // Validation succeeded, proceed with data insertion
+                        int userId = db.insertUserData(userName, passWord, phoneNum, gWeight, goalDate);
+                        db.insertWeightData(userId, currWeight, todayDate);
+
+                        // Dismiss the dialog after successful data insertion
+                        dialog.dismiss();
+                    }
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
 
@@ -94,7 +124,7 @@ public class SignUpDialog extends DialogFragment {
         return builder.create();
     }
 
-    public String getDate() {
+    private String getDate() {
         Date currentDate = new Date();
         // Define the desired date format
         String dateFormatPattern = "EEEE, MMMM d, yyyy";

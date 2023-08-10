@@ -24,12 +24,13 @@ public class PermissionsDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
+        manager = new UserSessionManager(requireActivity());
+        int userId = manager.getUserId();
+
+        db = new DBHandler(requireActivity());
 
         builder.setView(inflater.inflate(R.layout.dialog_sms, null))
                .setPositiveButton(R.string.accept, (dialog, id) -> {
-                   db = new DBHandler(requireActivity());
-                   manager = new UserSessionManager(requireActivity());
-                   int userId = manager.getUserId();
                    manager.setIsFirstLogin(userId, false);
                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
                        ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.SEND_SMS}, REQUEST_SMS_PERMISSION);
@@ -37,11 +38,10 @@ public class PermissionsDialog extends DialogFragment {
                        // Permission already granted, you can proceed with SMS-related operations
                        db.updateSMSState(userId, "true");
                    }
-
-
                })
                .setNegativeButton(R.string.deny, (dialog, id) -> {
                    // User cancelled the dialog
+                   db.updateSMSState(userId, "false");
                });
         // Create the AlertDialog object and return it
         return builder.create();

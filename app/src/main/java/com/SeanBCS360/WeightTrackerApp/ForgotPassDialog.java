@@ -1,24 +1,17 @@
 package com.SeanBCS360.WeightTrackerApp;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +25,7 @@ public class ForgotPassDialog extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the Builder class for convenient dialog construction
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
@@ -42,17 +35,20 @@ public class ForgotPassDialog extends DialogFragment {
         EditText phoneNumber = v.findViewById(R.id.phone_number);
 
         db = new DBHandler(getActivity());
-        
-        String enteredUserName = username.getText().toString();
-        String enteredPhoneNum = phoneNumber.getText().toString();
-
-        String queryPhoneNum;
-
 
         builder.setView(v)
-                .setPositiveButton("Sign Up", (dialog, id) -> {
-                    //if enterephone# correlates to entered useName -send message
-                    sendPasswordSMS(userId); 
+                .setPositiveButton("Send", (dialog, id) -> {
+                    String enteredUserName = username.getText().toString();
+                    String enteredPhoneNum = phoneNumber.getText().toString();
+
+                    int userId = db.authenticateUserPhone(enteredUserName, enteredPhoneNum);
+
+                    if (userId > -1) {
+                        sendPasswordSMS(userId);
+                    } else {
+                        Toast.makeText(getActivity(), "Phone# not recognized!", Toast.LENGTH_LONG).show();
+                    }
+
                 })
                 .setNegativeButton("Quit", (dialog, id) -> {
                     CharSequence text = "Come Back Soon!";
@@ -67,10 +63,11 @@ public class ForgotPassDialog extends DialogFragment {
 
     private void sendPasswordSMS(int userId) {
         String phoneNumber = db.getPhoneNumber(userId);
+        String password = db.getPassword(userId);
         String message = "Your password is: ";
 
         SmsManager smsManager = SmsManager.getDefault();
-        smsManager.sendTextMessage("1"+ phoneNumber, null, message, null, null);
+        smsManager.sendTextMessage("1"+ phoneNumber, null, message + password, null, null);
     }
 
 

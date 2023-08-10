@@ -78,33 +78,45 @@ public class DashFrag extends Fragment {
             weightDiff = weightDifference(getGoalWeight, currWeight);
             difference.setText(weightDiff);
 
+            //Days left to Goal Date
             long daysDiff = dateDifference(db.getGoalDate(userID));
             daysToGoal.setText(String.valueOf(daysDiff));
 
-            Toast.makeText(getActivity(), Long.toString(daysDiff), Toast.LENGTH_LONG).show();
-
+            //Add new daily weight
             add.setOnClickListener(view -> {
-                if(!String.valueOf(dailyWeight).isEmpty()) {
-                float updateWeight = Float.parseFloat(dailyWeight.getText().toString());
+                String weightInput = dailyWeight.getText().toString().trim();
 
-                addWeightToDB(db, updateWeight, userID);
-                weightOutput.setText(formatWeights(updateWeight));
-
-                weightDiff = weightDifference(getGoalWeight, updateWeight);
-                difference.setText(weightDiff);
-                dailyWeight.setText("");
-
-                if(manager.messageSent(userID)) {
-                    if (Float.parseFloat(weightDiff) <= 0f && db.getSMSState(userID)) {
-                        sendCongratulatorySMS(userID);
-                        manager.setMessageSent(userID, true);
-                    }
+                if (weightInput.isEmpty()) {
+                    dailyWeight.setError("Please enter a weight value.");
+                    return;
                 }
 
-            }});
+                try {
+                    float updateWeight = Float.parseFloat(weightInput);
 
+                    if (updateWeight <= 10) {
+                        dailyWeight.setError("Weight must be greater than 10.");
+                        return;
+                    }
 
+                    // Continue with adding the weight and updating the UI
+                    addWeightToDB(db, updateWeight, userID);
+                    weightOutput.setText(formatWeights(updateWeight));
 
+                    weightDiff = weightDifference(getGoalWeight, updateWeight);
+                    difference.setText(weightDiff);
+                    dailyWeight.setText("");
+
+                    if (!manager.messageSent(userID)) {
+                        if (Float.parseFloat(weightDiff) <= 0f && db.getSMSState(userID)) {
+                            sendCongratulatorySMS(userID);
+                            manager.setMessageSent(userID, true);
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    dailyWeight.setError("Invalid weight format. Please enter a valid number.");
+                }
+            });
 
 
         } else {
