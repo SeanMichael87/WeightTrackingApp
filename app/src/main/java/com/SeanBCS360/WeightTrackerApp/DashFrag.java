@@ -1,5 +1,6 @@
 package com.SeanBCS360.WeightTrackerApp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.LayoutInflater;
@@ -12,11 +13,22 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -29,6 +41,7 @@ import java.util.Locale;
 public class DashFrag extends Fragment {
 
     private static final int PERMISSIONS_REQUEST_SMS = 1;
+    LineChart graph;
     TextView goalWeight;
     TextView weightOutput;
     TextView difference;
@@ -52,6 +65,7 @@ public class DashFrag extends Fragment {
         View v = inflater.inflate(R.layout.fragment_dash, container, false);
 
         db = new DBHandler(getActivity());
+        graph = v.findViewById(R.id.graph);
         goalWeight = v.findViewById(R.id.dash_goal_weight);
         weightOutput = v.findViewById(R.id.current_weight);
         difference = v.findViewById(R.id.difference);
@@ -61,17 +75,18 @@ public class DashFrag extends Fragment {
 
 
         UserSessionManager manager = new UserSessionManager(requireActivity());
-        int userID = manager.getUserId();
+        int userId = manager.getUserId();
 
-        if (userID != -1) {
+        if (userId != -1) {
+            setupWeightGraph(userId);
 
             //Current Weight Values
-            weights = db.getUserWeights(userID);
+            weights = db.getUserWeights(userId);
             double currWeight = weights.get(weights.size() -1);
             weightOutput.setText(formatWeights(currWeight));
 
             //Current Goal Values
-            double getGoalWeight = db.getGoalWeight(userID);
+            double getGoalWeight = db.getGoalWeight(userId);
             goalWeight.setText(formatWeights(getGoalWeight));
 
             //Current weight Difference
@@ -79,7 +94,7 @@ public class DashFrag extends Fragment {
             difference.setText(weightDiff);
 
             //Days left to Goal Date
-            long daysDiff = dateDifference(db.getGoalDate(userID));
+            long daysDiff = dateDifference(db.getGoalDate(userId));
             daysToGoal.setText(String.valueOf(daysDiff));
 
             //Add new daily weight
@@ -100,17 +115,17 @@ public class DashFrag extends Fragment {
                     }
 
                     // Continue with adding the weight and updating the UI
-                    addWeightToDB(db, updateWeight, userID);
+                    addWeightToDB(db, updateWeight, userId);
                     weightOutput.setText(formatWeights(updateWeight));
 
                     weightDiff = weightDifference(getGoalWeight, updateWeight);
                     difference.setText(weightDiff);
                     dailyWeight.setText("");
 
-                    if (!manager.messageSent(userID)) {
-                        if (Float.parseFloat(weightDiff) <= 0f && db.getSMSState(userID)) {
-                            sendCongratulatorySMS(userID);
-                            manager.setMessageSent(userID, true);
+                    if (!manager.messageSent(userId)) {
+                        if (Float.parseFloat(weightDiff) <= 0f && db.getSMSState(userId)) {
+                            sendCongratulatorySMS(userId);
+                            manager.setMessageSent(userId, true);
                         }
                     }
                 } catch (NumberFormatException e) {
@@ -148,6 +163,8 @@ public class DashFrag extends Fragment {
         return formatWeights(difference);
     }
 
+    //Resources:
+    //https://stackoverflow.com/questions/42553017/android-calculate-days-between-two-dates
     public long dateDifference(String goalDate) {
         Date currDate = new Date();
         // Define the desired date format
@@ -169,5 +186,73 @@ public class DashFrag extends Fragment {
 
         SmsManager smsManager = SmsManager.getDefault();
         smsManager.sendTextMessage("1"+ phoneNumber, null, message, null, null);
+    }
+
+    //Create graph:
+    //Resources:
+    //https://weeklycoding.com/mpandroidchart/
+    //https://stackoverflow.com/questions/32718820/failed-to-resolve-com-github-philjaympandroidchartv2-1-4
+    //https://stackoverflow.com/questions/60682917/legend-setposition-is-not-a-valid-method
+    private void setupWeightGraph(int userId) {
+        // Retrieve weight history data from your database
+        List<Double> weights = db.getUserWeights(userId);
+
+        // Calculate the goal weight and Y-axis range
+        double getGoalWeight = db.getGoalWeight(userId);
+        double minWeight = Math.min(getGoalWeight, Collections.min(weights));
+        double maxWeight = Math.max(getGoalWeight, Collections.max(weights));
+
+        // Create a list of Entry objects from the weight history data
+        List<Entry> entries = new ArrayList<>();
+        for (int i = 0; i < weights.size(); i++) {
+            entries.add(new Entry(i, weights.get(i).floatValue()));
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, "Weight History");
+        graph.getDescription().setText("Daily Weights");
+
+        graph.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        graph.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        graph.getLegend().setDrawInside(true);
+
+        dataSet.setColor(Color.BLUE); // Customize line color
+
+        LineData lineData = new LineData(dataSet);
+        graph.setData(lineData);
+
+        // Customize X-axis
+        XAxis xAxis = graph.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                int index = (int) value;
+                if (index >= 0 && index < weights.size()) {
+                    return formatDateForXAxis(); // Implement this method to format the date
+                }
+                return "";
+            }
+        });
+
+        // Customize Y-axis
+        YAxis yAxisLeft = graph.getAxisLeft();
+        graph.getAxisRight().setEnabled(false);
+        yAxisLeft.setAxisMinimum((float) minWeight); // Minimum Y-axis value
+        yAxisLeft.setAxisMaximum((float) maxWeight); // Maximum Y-axis value
+
+        // Refresh chart
+        graph.invalidate();
+    }
+    private String formatDateForXAxis() {
+        //CurrentDate placeholder
+        LocalDate currentDate = LocalDate.now();
+
+        String dateFormatPattern = "MMM dd,";
+
+        // Create a DateTimeFormatter with the specified pattern
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormatPattern);
+
+       return currentDate.format(formatter);
+
     }
 }
