@@ -35,7 +35,7 @@ The areas I was most successful implementing, I feel, are the database and the s
 1. **Device Compatibility**:
 Make sure you have an Android device or emulator with a compatible version of the Android operating system (Android 9.0 Pie or higher).
 2. **Installation**:
-Download the weight tracker app's installation package (APK file) from a trusted source or platform.
+Download the New You weight tracker app's installation package (APK file) from a trusted source or platform.
 3. **Permissions**:
 During installation, the app might request various permissions, such as accessing SMS, storage, and network. Grant the necessary permissions for the app to function properly.
 4. **Launch the App**:
