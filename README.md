@@ -27,7 +27,7 @@ The areas I was most successful implementing, I feel, are the database and the s
 
 **Android OS Version**: The app is developed for Android devices. It requires a compatible Android operating system version, typically Android 9.0 (Pie/API 28) or higher.
 
-**Permissions**: The app may require permissions to access features such as SMS (for sending congratulatory messages), storage (for saving user data), and network connectivity (for accessing backend services).
+**Permissions**: The app may require permissions to access features such as SMS (for sending congratulatory messages).
 
 **Libraries and Dependencies**: The app may utilize libraries for UI components (like RecyclerView, EditText), date handling (like DatePickerDialog), and SMS management (like SmsManager). These libraries are typically included as dependencies in the app's build.gradle file.
 
