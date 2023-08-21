@@ -1,3 +1,9 @@
+![Static Badge](https://img.shields.io/badge/Version-v1.0-blue)
+![Static Badge](https://img.shields.io/badge/API-28-brightgreen)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![Android Studio](https://img.shields.io/badge/Android%20Studio-3DDC84.svg?style=for-the-badge&logo=android-studio&logoColor=white)
+
+
 # New You - Weight Tracker App
 
 The New You app aims to address users' needs for effective weight management and goal tracking. By allowing users to create profiles, input daily weights, and set weight loss goals, the app provides a comprehensive solution for monitoring their weight-related progress. With features like goal setting, goal date tracking, and SMS notifications, users can stay motivated and focused on their fitness objectives. The app empowers users to make informed decisions about their health and wellness by providing a user-friendly platform to track their weight journey and celebrate milestones.
