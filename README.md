@@ -71,8 +71,6 @@ When you're done using the app, make sure to log out to ensure the security of y
 
 Sean Bruyere
 
-Sean.Bruyere@snhu.edu
-
 Sean.Bruy21@gmail.com
 
 Version History
